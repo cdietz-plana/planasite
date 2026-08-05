@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan A UX Studio — Version A (Cubic)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  :root{
+    --navy:#0A0F1E;
+    --navy-2:#0F1730;
+    --ink:#05070F;
+    --paper:#F4F1EA;
+    --paper-dim:#B9BDC9;
+    --orange:#FF5A16;
+    --line:rgba(244,241,234,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--navy);color:var(--paper);
+    font-family:"Inter",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--orange);color:#000}
+  h1,h2,h3,.disp{font-family:"Space Grotesk",sans-serif;text-transform:uppercase;font-weight:700;line-height:.92;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1400px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;width:100%;z-index:100;padding:20px 0;mix-blend-mode:difference}
+  .nav-in{display:flex;justify-content:space-between;align-items:center}
+  .logo{font-family:"Space Grotesk";font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+  .logo span{color:var(--orange)}
+  .nav-links{display:flex;gap:34px;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .nav-links a{opacity:.85;transition:opacity .3s}
+  .nav-links a:hover{opacity:1}
+  @media(max-width:760px){.nav-links{display:none}}
+
+  /* HERO */
+  .hero{height:100vh;min-height:640px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:6vh;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg canvas{width:100%;height:100%;display:block}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 70% 20%,rgba(255,90,22,.20),transparent 60%),linear-gradient(180deg,rgba(10,15,30,.2),var(--navy) 96%)}
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero-tag{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:26px}
+  .hero-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 14px var(--orange)}
+  .hero h1{font-size:clamp(58px,13vw,215px);margin-bottom:26px}
+  .hero h1 .l{display:block;overflow:hidden}
+  .hero h1 .l i{display:block;font-style:normal;transform:translateY(105%)}
+  .hero-sub{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;border-top:1px solid var(--line);padding-top:22px}
+  .hero-sub p{max-width:340px;font-size:15px;color:var(--paper-dim);line-height:1.5}
+  .scrollcue{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-dim);display:flex;align-items:center;gap:10px}
+  .scrollcue .bar{width:44px;height:1px;background:var(--paper-dim);position:relative;overflow:hidden}
+  .scrollcue .bar::after{content:"";position:absolute;inset:0;background:var(--orange);animation:slide 1.8s infinite}
+  @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+  /* MARQUEE */
+  .marquee{background:var(--orange);color:#0A0F1E;padding:16px 0;overflow:hidden;white-space:nowrap;border-top:1px solid #000;border-bottom:1px solid #000}
+  .marquee.dark{background:var(--ink);color:var(--paper)}
+  .marquee .track{display:inline-block;will-change:transform}
+  .marquee .track span{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;font-size:clamp(18px,2.4vw,30px);letter-spacing:.01em;padding:0 22px}
+  .marquee .track span .ast{color:var(--paper);opacity:.5;margin-left:22px}
+  .marquee.dark .track span .ast{color:var(--orange);opacity:1}
+
+  /* ABSTRACT SHAPES */
+  .shape{position:absolute;pointer-events:none;z-index:0}
+  .shape.ring{border:1px solid var(--orange);border-radius:50%;opacity:.35;animation:spin 26s linear infinite}
+  .shape.ring2{border:1px dashed var(--line);border-radius:50%;animation:spin 40s linear infinite reverse}
+  .shape.tri{width:0;height:0;border-left:26px solid transparent;border-right:26px solid transparent;border-bottom:44px solid transparent;border-bottom-color:rgba(255,90,22,.4);animation:float 9s ease-in-out infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-26px) rotate(18deg)}}
+
+  /* STATEMENT */
+  .statement{padding:clamp(90px,16vh,190px) 0;position:relative;overflow:hidden}
+  .statement .wrap{display:grid;grid-template-columns:1fr;gap:40px;position:relative;z-index:2}
+  .kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+  .kicker::before{content:"✳";font-size:14px}
+  .statement h2{font-size:clamp(30px,5.4vw,84px);max-width:16ch}
+  .statement h2 .w{display:inline-block;overflow:hidden;vertical-align:top}
+  .statement h2 .w i{display:inline-block;font-style:normal;transform:translateY(105%)}
+  .statement h2 .o{color:var(--orange)}
+
+  /* LOGOS */
+  .logos{padding:70px 0 90px;border-top:1px solid var(--line)}
+  .logos .lead{font-size:clamp(20px,3vw,40px);max-width:20ch;margin-bottom:56px}
+  .logo-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--line)}
+  .logo-grid div{padding:34px 12px;text-align:center;font-family:"Space Grotesk";font-weight:700;font-size:clamp(14px,1.5vw,22px);letter-spacing:.02em;color:var(--paper);border-right:1px solid var(--line);border-bottom:1px solid var(--line);opacity:.55;transition:opacity .3s,color .3s}
+  .logo-grid div:hover{opacity:1;color:var(--orange)}
+  @media(max-width:760px){.logo-grid{grid-template-columns:repeat(3,1fr)}}
+
+  /* SERVICES */
+  .services{padding:clamp(80px,14vh,160px) 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:50px;flex-wrap:wrap;gap:16px}
+  .sec-head h2{font-size:clamp(34px,6vw,92px)}
+  .sec-head .idx{font-size:12px;letter-spacing:.16em;color:var(--paper-dim);text-transform:uppercase}
+  .srow{display:grid;grid-template-columns:70px 1fr minmax(0,240px);align-items:center;gap:24px;padding:30px 0;border-top:1px solid var(--line);position:relative;cursor:default}
+  .srow:last-child{border-bottom:1px solid var(--line)}
+  .srow .num{font-family:"Space Grotesk";font-size:15px;color:var(--orange);align-self:start;padding-top:.5em}
+  .srow .name{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;font-size:clamp(26px,4.6vw,62px);letter-spacing:-.02em;transition:transform .4s,color .3s;display:block}
+  .srow .desc{font-size:15px;color:var(--paper-dim);max-width:520px;line-height:1.55;max-height:0;opacity:0;overflow:hidden;transition:max-height .55s ease,opacity .4s ease,margin-top .5s ease}
+  .srow:hover .desc{max-height:220px;opacity:1;margin-top:16px}
+  .srow .wf{opacity:0;transform:translateX(18px);transition:opacity .45s ease,transform .45s ease;justify-self:end;width:100%;max-width:240px;color:rgba(244,241,234,.82)}
+  .srow:hover .wf{opacity:1;transform:none}
+  .ill{width:100%;height:auto;display:block}
+  .ill .ac{stroke:var(--orange)}
+  .srow:hover .name{transform:translateX(22px);color:var(--orange)}
+  @media(max-width:760px){.srow{grid-template-columns:44px 1fr}.srow .wf{display:none}}
+
+  /* STATS */
+  .stats{padding:clamp(80px,12vh,150px) 0;background:var(--navy-2)}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .stat-grid .st{padding:20px 26px;border-left:1px solid var(--line)}
+  .stat-grid .st:first-child{border-left:none;padding-left:0}
+  .stat-grid .num{font-family:"Space Grotesk";font-weight:700;font-size:clamp(46px,8vw,112px);line-height:1;letter-spacing:-.03em}
+  .stat-grid .num .u{color:var(--orange)}
+  .stat-grid .lbl{margin-top:14px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--paper-dim);line-height:1.4}
+  @media(max-width:760px){.stat-grid{grid-template-columns:repeat(2,1fr);gap:30px 0}.stat-grid .st{border-left:none;padding-left:0}.stat-grid .st:nth-child(even){padding-left:26px;border-left:1px solid var(--line)}}
+
+  /* WORK */
+  .work{padding:clamp(80px,14vh,160px) 0}
+  .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .card{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;isolation:isolate}
+  .card .bg{position:absolute;inset:0;z-index:-2;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+  .card::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 30%,rgba(5,7,15,.75))}
+  .card:hover .bg{transform:scale(1.06)}
+  .card .cat{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+  .card h3{font-size:clamp(24px,3vw,40px)}
+  @media(max-width:760px){.work-grid{grid-template-columns:1fr}}
+
+  /* PROCESS */
+  .process{padding:clamp(70px,10vh,130px) 0;text-align:center;border-top:1px solid var(--line)}
+  .process .row{display:flex;justify-content:center;align-items:center;gap:clamp(14px,4vw,60px);flex-wrap:wrap}
+  .process .step{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;font-size:clamp(34px,8vw,110px);letter-spacing:-.02em}
+  .process .step.o{color:var(--orange)}
+  .process .plus{color:var(--paper-dim);font-size:clamp(20px,3vw,40px)}
+
+  /* CTA */
+  .cta{padding:clamp(90px,16vh,210px) 0;position:relative;overflow:hidden}
+  .cta .bg{position:absolute;inset:0;background:radial-gradient(80% 120% at 50% 120%,rgba(255,90,22,.28),transparent 60%)}
+  .cta .wrap{position:relative;z-index:2;text-align:center}
+  .cta h2{font-size:clamp(52px,15vw,230px)}
+  .cta h2 .o{color:var(--orange)}
+  .cta .btn{display:inline-block;margin-top:40px;border:1px solid var(--paper);border-radius:100px;padding:18px 44px;font-family:"Space Grotesk";text-transform:uppercase;font-size:14px;letter-spacing:.08em;transition:background .3s,color .3s}
+  .cta .btn:hover{background:var(--orange);border-color:var(--orange);color:#000}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);padding:44px 0}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-size:13px;color:var(--paper-dim)}
+  .foot a{color:var(--paper)}
+  .note{background:var(--ink);color:var(--paper-dim);font-size:11px;text-align:center;padding:10px;letter-spacing:.04em}
+</style>
+</head>
+<body>
+
+
+<nav><div class="wrap nav-in">
+  <div class="logo">PLAN A <span>/ UX</span></div>
+  <div class="nav-links"><a href="#work">Work</a><a href="#services">Studio</a><a href="#services">Services</a><a href="#cta">Contact</a></div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg"><canvas id="fx"></canvas></div>
+  <div class="wrap">
+    <div class="hero-tag"><span class="dot"></span> The UX Studio inside Plan A</div>
+    <h1>
+      <span class="l"><i>Design</i></span>
+      <span class="l"><i>That&nbsp;Ships.</i></span>
+    </h1>
+    <div class="hero-sub">
+      <p>We don't hand you a Figma file. We design it, then our engineers ship it — at names you already know.</p>
+      <div class="scrollcue">Scroll <span class="bar"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="track" id="mq1">
+  <span>Product<span class="ast">✳</span></span><span>UX<span class="ast">✳</span></span><span>UI<span class="ast">✳</span></span><span>Design Systems<span class="ast">✳</span></span><span>Research<span class="ast">✳</span></span><span>Motion<span class="ast">✳</span></span>
+  <span>Product<span class="ast">✳</span></span><span>UX<span class="ast">✳</span></span><span>UI<span class="ast">✳</span></span><span>Design Systems<span class="ast">✳</span></span><span>Research<span class="ast">✳</span></span><span>Motion<span class="ast">✳</span></span>
+</div></div>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="shape ring" style="width:340px;height:340px;top:-120px;right:-80px"></div>
+  <div class="shape ring2" style="width:520px;height:520px;bottom:-260px;left:-160px"></div>
+  <div class="shape tri" style="top:22%;left:8%"></div>
+  <div class="wrap">
+    <div><div class="kicker">Why we're different</div></div>
+    <h2 class="reveal-words">Most studios hand you a <span class="o">file.</span> We hand you a <span class="o">product.</span></h2>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section class="logos">
+  <div class="wrap">
+    <div class="disp lead">Trusted with screens you've probably used.</div>
+    <div class="logo-grid">
+      <div>Apple</div><div>Google</div><div>Microsoft</div><div>Verizon</div><div>NBC</div><div>Mayo Clinic</div>
+      <div>MGM</div><div>Marriott</div><div>Salesforce</div><div>McDonald's</div><div>Carnival</div><div>Amgen</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="sec-head"><h2>What we do</h2><div class="idx">(05 disciplines)</div></div>
+    <div class="srow"><span class="num">01</span><div class="scol"><span class="name">Product &amp; UX</span><p class="desc">Requirements gathering, journey mapping, and end-to-end UX — for everything from mobile apps to complex enterprise systems. When an experience needs to actually play, we tie straight into our game-design team.</p></div><div class="wf"><svg class="ill" viewBox="0 0 240 150" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="30" width="58" height="90" rx="8"/><line x1="26" y1="46" x2="60" y2="46"/><line x1="26" y1="56" x2="52" y2="56"/><rect x="26" y="94" width="34" height="14" rx="3" class="ac"/><rect x="100" y="46" width="58" height="58" rx="8"/><circle cx="129" cy="66" r="9"/><line x1="112" y1="90" x2="146" y2="90"/><rect x="184" y="34" width="44" height="82" rx="8"/><line x1="194" y1="50" x2="218" y2="50"/><line x1="194" y1="60" x2="212" y2="60"/><path d="M74 82 L98 74" class="ac"/><path d="M92 70 L99 74 L94 80" class="ac"/><path d="M158 78 L184 74" class="ac"/><path d="M178 70 L185 74 L180 80" class="ac"/></svg></div></div>
+    <div class="srow"><span class="num">02</span><div class="scol"><span class="name">UI &amp; Visual</span><p class="desc">The same rigor, pointed at the surface: type, color, hierarchy, and interface detail that carries your brand — and still holds up when real users get their hands on it.</p></div><div class="wf"><svg class="ill" viewBox="0 0 240 150" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="24" width="150" height="104" rx="8"/><line x1="36" y1="46" x2="120" y2="46"/><line x1="36" y1="58" x2="150" y2="58" stroke-width="1.4"/><rect x="36" y="74" width="54" height="22" rx="5" class="ac"/><rect x="100" y="74" width="56" height="40" rx="5"/><circle cx="198" cy="40" r="11" class="ac"/><circle cx="198" cy="70" r="11"/><circle cx="198" cy="100" r="11"/></svg></div></div>
+    <div class="srow"><span class="num">03</span><div class="scol"><span class="name">Design Systems</span><p class="desc">We build, document, and maintain component libraries and design tokens — working shoulder-to-shoulder with your front-end engineers so the system actually ships and stays alive.</p></div><div class="wf"><svg class="ill" viewBox="0 0 240 150" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="28" width="42" height="42" rx="6" class="ac"/><rect x="24" y="88" width="42" height="34" rx="6"/><rect x="98" y="28" width="42" height="42" rx="6"/><rect x="98" y="88" width="42" height="34" rx="6"/><rect x="172" y="28" width="42" height="42" rx="6"/><rect x="172" y="88" width="42" height="34" rx="6"/><path d="M66 49 L98 49" class="ac"/><path d="M140 49 L172 49"/><path d="M45 70 L45 88"/><path d="M119 70 L119 88"/><path d="M193 70 L193 88"/></svg></div></div>
+    <div class="srow"><span class="num">04</span><div class="scol"><span class="name">Research</span><p class="desc">User interviews, usability studies, and data-led validation. It's the step most teams skip to save time — and it's where we've found some of our biggest wins.</p></div><div class="wf"><svg class="ill" viewBox="0 0 240 150" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="22" y="26" width="122" height="98" rx="8"/><line x1="38" y1="44" x2="98" y2="44"/><polyline points="38,106 64,84 86,94 110,62 132,72"/><circle cx="172" cy="72" r="30" class="ac"/><line x1="193" y1="93" x2="214" y2="114" stroke-width="3" class="ac"/></svg></div></div>
+    <div class="srow"><span class="num">05</span><div class="scol"><span class="name">Motion &amp; Art</span><p class="desc">A full creative bench — motion designers, illustrators, and our in-house game-design team on call for the moments that need to feel alive.</p></div><div class="wf"><svg class="ill" viewBox="0 0 240 150" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 118 C72 118 70 42 120 42 C170 42 168 108 216 108" class="ac"/><rect x="16" y="110" width="16" height="16" rx="3"/><rect x="112" y="34" width="16" height="16" rx="3" class="ac"/><rect x="208" y="100" width="16" height="16" rx="3"/><g class="ac"><line x1="176" y1="70" x2="176" y2="96"/><line x1="163" y1="83" x2="189" y2="83"/><line x1="167" y1="74" x2="185" y2="92"/><line x1="185" y1="74" x2="167" y2="92"/></g></svg></div></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stat-grid">
+      <div class="st"><div class="num" data-to="500"><span>0</span><span class="u">+</span></div><div class="lbl">Products shipped</div></div>
+      <div class="st"><div class="num" data-to="200"><span>0</span><span class="u">+</span></div><div class="lbl">Clients served</div></div>
+      <div class="st"><div class="num" data-to="0.4"><span>0</span><span class="u">%</span></div><div class="lbl">Of applicants hired</div></div>
+      <div class="st"><div class="num" data-to="20"><span>0</span><span class="u">yrs</span></div><div class="lbl">Of shipped software</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="sec-head"><h2>Selected work</h2><div class="idx">(2026 ©)</div></div>
+    <div class="work-grid">
+      <div class="card"><div class="bg" style="background:linear-gradient(135deg,#1E3A8A,#0A0F1E)"></div><div class="cat">Product · UX</div><h3>Casino Floor OS</h3></div>
+      <div class="card"><div class="bg" style="background:linear-gradient(135deg,#B4471F,#2A0F06)"></div><div class="cat">Mobile · UI</div><h3>Loyalty App</h3></div>
+      <div class="card"><div class="bg" style="background:linear-gradient(135deg,#0E7C5A,#04231A)"></div><div class="cat">Design System</div><h3>Enterprise Kit</h3></div>
+      <div class="card"><div class="bg" style="background:linear-gradient(135deg,#5B21B6,#160A2E)"></div><div class="cat">Research · UX</div><h3>Booking Rebuild</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="wrap"><div class="row">
+    <span class="step">Research</span><span class="plus">✳</span><span class="step">Design</span><span class="plus">✳</span><span class="step o">Ship</span>
+  </div></div>
+</section>
+
+<!-- MARQUEE DARK -->
+<div class="marquee dark"><div class="track" id="mq2">
+  <span>Let's build something<span class="ast">✳</span></span><span>Let's build something<span class="ast">✳</span></span><span>Let's build something<span class="ast">✳</span></span><span>Let's build something<span class="ast">✳</span></span>
+</div></div>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="bg"></div>
+  <div class="wrap">
+    <h2>Let's<br>design<br><span class="o">something good.</span></h2>
+    <a href="#" class="btn">Let's Talk ✳</a>
+  </div>
+</section>
+
+<footer><div class="wrap foot">
+  <div>© 2026 Plan A UX Studio</div>
+  <div>Plan A Technologies · Game Studio · <a href="#">UX Studio</a></div>
+  <div>Sales@PlanATechnologies.com</div>
+</div></footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* hero — Three.js morphing CUBIC form (for Christian) */
+(function(){
+  const canvas=document.getElementById('fx'); if(!canvas||!window.THREE) return;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  let w=canvas.offsetWidth,h=canvas.offsetHeight;
+  const cam=new THREE.PerspectiveCamera(42,w/h,0.1,100); cam.position.z=4.6;
+
+  // rig = mouse-lean; grp = idle tumble
+  const rig=new THREE.Group(); scene.add(rig);
+  const grp=new THREE.Group(); rig.add(grp);
+
+  // rippling cube — dense box so faces can undulate while corners stay sharp
+  const SEG=24;
+  const geo=new THREE.BoxGeometry(2.0,2.0,2.0,SEG,SEG,SEG);
+  const base=geo.attributes.position.array.slice();
+  const wire=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:0xFF5A16,wireframe:true,transparent:true,opacity:.5}));
+  const pts=new THREE.Points(geo,new THREE.PointsMaterial({color:0xF4F1EA,size:0.026,transparent:true,opacity:.9}));
+  grp.add(wire); grp.add(pts);
+
+  // outer wireframe cage cube for depth + cubic motif
+  const cage=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(3.4,3.4,3.4)),
+    new THREE.LineBasicMaterial({color:0xFF5A16,transparent:true,opacity:.22}));
+  rig.add(cage);
+
+  function noise(x,y,z,t){
+    return Math.sin(x*1.6+t)*0.5+Math.sin(y*1.9-t*1.1)*0.35+Math.sin(z*2.2+t*0.7)*0.3;
+  }
+  function size(){w=canvas.offsetWidth;h=canvas.offsetHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}
+  size(); window.addEventListener('resize',size);
+
+  let mx=0,my=0,tx=0,ty=0;
+  window.addEventListener('mousemove',e=>{mx=(e.clientX/window.innerWidth-.5);my=(e.clientY/window.innerHeight-.5);});
+
+  const pos=geo.attributes.position;
+  function frame(t){
+    t*=0.001;
+    const pulse=1+0.05*Math.sin(t*1.7);           // breathing
+    for(let i=0;i<pos.count;i++){
+      const ix=i*3; let ox=base[ix],oy=base[ix+1],oz=base[ix+2];
+      const n=0.14*noise(ox,oy,oz,t);
+      // push the vertex out along whichever face it sits on -> faces ripple, cube stays cubic
+      const ax=Math.abs(ox),ay=Math.abs(oy),az=Math.abs(oz);
+      if(ax>=ay&&ax>=az) ox+=Math.sign(ox)*n;
+      else if(ay>=ax&&ay>=az) oy+=Math.sign(oy)*n;
+      else oz+=Math.sign(oz)*n;
+      pos.array[ix]=ox*pulse; pos.array[ix+1]=oy*pulse; pos.array[ix+2]=oz*pulse;
+    }
+    pos.needsUpdate=true;
+    tx+=(mx-tx)*.05; ty+=(my-ty)*.05;
+    rig.rotation.y=tx*0.7; rig.rotation.x=ty*0.6;   // lean toward cursor
+    grp.rotation.y+=0.003; grp.rotation.x+=0.0016;  // idle tumble
+    cage.rotation.y-=0.0011; cage.rotation.x+=0.0007;
+    // scroll parallax
+    const sc=Math.min(window.scrollY/window.innerHeight,1);
+    rig.position.y=sc*1.4; rig.scale.setScalar(1-sc*0.25);
+    renderer.render(scene,cam);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* hero headline rise */
+gsap.to(".hero h1 .l i",{y:0,duration:1.1,stagger:.12,ease:"power4.out",delay:.2});
+gsap.from(".hero-tag,.hero-sub",{y:20,opacity:0,duration:1,stagger:.15,delay:.6,ease:"power3.out"});
+
+/* marquee scroll */
+function mq(id,dir){const el=document.getElementById(id); if(!el)return;
+  const full=el.scrollWidth/2;
+  gsap.to(el,{x:dir<0?-full:0,duration:22,ease:"none",repeat:-1,modifiers:{x:gsap.utils.unitize(v=>{let n=parseFloat(v)%full;return dir<0?n:n-full;})}});
+}
+mq('mq1',-1); mq('mq2',1);
+
+/* statement word reveal */
+document.querySelectorAll('.reveal-words').forEach(el=>{
+  el.innerHTML=el.innerHTML.replace(/(<span class="o">.*?<\/span>|[^\s<]+)(\s*)/g,(m,word,sp)=>{
+    return '<span class="w"><i>'+word+'</i></span>'+sp;
+  });
+  gsap.to(el.querySelectorAll('.w i'),{y:0,duration:.9,stagger:.06,ease:"power4.out",
+    scrollTrigger:{trigger:el,start:"top 80%"}});
+});
+
+/* generic fade-ups */
+gsap.utils.toArray('.logos .lead,.sec-head,.card,.process .step,.cta h2,.cta .btn').forEach(el=>{
+  gsap.from(el,{y:40,opacity:0,duration:.9,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 85%"}});
+});
+
+/* logo grid stagger */
+gsap.from('.logo-grid div',{opacity:0,y:20,duration:.6,stagger:.04,ease:"power2.out",scrollTrigger:{trigger:'.logo-grid',start:"top 82%"}});
+
+/* count up */
+document.querySelectorAll('.stat-grid .num').forEach(el=>{
+  const to=parseFloat(el.dataset.to),span=el.querySelector('span'),dec=(to%1!==0);
+  const o={v:0};
+  gsap.to(o,{v:to,duration:1.8,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 85%"},
+    onUpdate:()=>{span.textContent=dec?o.v.toFixed(1):Math.floor(o.v);}});
+});
+
+/* service illustrations reveal via CSS on hover */
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan A — Hero Headline Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0A0F1E;--navy-2:#0F1730;--paper:#F4F1EA;--paper-dim:#B9BDC9;--orange:#FF5A16;--line:rgba(244,241,234,.14)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--navy);color:var(--paper);font-family:"Inter",sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,.disp{font-family:"Space Grotesk";text-transform:uppercase;font-weight:700;letter-spacing:-.02em;line-height:.9}
+  .wrap{max-width:1200px;margin:0 auto;padding:40px clamp(20px,5vw,60px)}
+  .intro{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:10px}
+  .intro .k{font-family:"Space Grotesk";font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+  .intro h1{font-size:clamp(30px,5vw,54px)}
+  .intro p{color:var(--paper-dim);max-width:70ch;margin-top:14px;line-height:1.6}
+  .opt{border-bottom:1px solid var(--line);padding:48px 0;display:grid;grid-template-columns:200px 1fr;gap:30px;align-items:center}
+  @media(max-width:760px){.opt{grid-template-columns:1fr;gap:16px}}
+  .opt .meta .tag{font-family:"Space Grotesk";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+  .opt .meta h2{font-size:26px;margin-bottom:10px}
+  .opt .meta p{color:var(--paper-dim);font-size:14px;line-height:1.55}
+  .stage{min-height:170px;display:flex;align-items:center}
+  /* shared headline shell */
+  .hl{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;font-size:clamp(40px,8vw,104px);line-height:.92;letter-spacing:-.02em;display:flex;align-items:baseline;gap:.28em;flex-wrap:wrap}
+  .hl .we{color:var(--paper)}
+  .hl .o{color:var(--orange)}
+  /* A — 3D cube flip */
+  .flip{position:relative;display:inline-block;height:1.05em;overflow:hidden;perspective:600px;min-width:6ch}
+  .flip .word{position:absolute;left:0;top:0;color:var(--orange);backface-visibility:hidden;transform-origin:center bottom;white-space:nowrap}
+  /* B — invert swap */
+  .inv{position:relative;display:inline-flex;padding:.02em .18em;overflow:hidden}
+  .inv .word{color:var(--orange);white-space:nowrap;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+  .inv .flash{position:absolute;inset:0;background:var(--orange);transform:translateY(101%)}
+  .inv.on .flash{animation:invflash .62s cubic-bezier(.7,0,.2,1)}
+  @keyframes invflash{0%{transform:translateY(101%)}45%{transform:translateY(0)}55%{transform:translateY(0)}100%{transform:translateY(-101%)}}
+  /* C — scramble */
+  .scr{color:var(--orange);font-family:"JetBrains Mono",monospace;font-weight:700;white-space:nowrap;min-width:7ch;display:inline-block}
+  /* D — skew slam */
+  .slam{position:relative;display:inline-block;height:1.05em;overflow:hidden;min-width:6ch}
+  .slam .word{position:absolute;left:0;top:0;color:var(--orange);white-space:nowrap}
+  .hint{color:var(--paper-dim);font-size:12px;margin-top:8px}
+  .cursor{color:var(--orange);animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="intro">
+    <div class="k">✳ Plan A Technologies — hero headline concepts</div>
+    <h1>"We ___" — four ways to animate it</h1>
+    <p>The live headline cycles through <b>modernize · advise · transform · build · integrate · automate · rescue</b>. Below are four distinct motion treatments (all playing live). Tell me which one to wire into the homepage hero — or mix elements between them.</p>
+  </div>
+
+  <!-- OPTION A -->
+  <div class="opt">
+    <div class="meta">
+      <div class="tag">Option A</div>
+      <h2>Cube Flip</h2>
+      <p>The verb mechanically rotates in on a 3D cube face — tactile, engineered, like physical hardware flipping. Reads as precision.</p>
+    </div>
+    <div class="stage"><div class="hl"><span class="we">We</span><span class="flip" id="A"></span></div></div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="opt">
+    <div class="meta">
+      <div class="tag">Option B</div>
+      <h2>Invert Swap</h2>
+      <p>An orange bar wipes through and the word swaps behind it — a nod to the color-inversion transition from the UX studio concept. Bold, brand-forward.</p>
+    </div>
+    <div class="stage"><div class="hl"><span class="we">We</span><span class="inv" id="B"><span class="word">modernize</span><span class="flash"></span></span></div></div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="opt">
+    <div class="meta">
+      <div class="tag">Option C</div>
+      <h2>Decode Scramble</h2>
+      <p>The word scrambles through random characters then resolves — unmistakably "software." Monospace on the verb only. Very on-brand for a dev + AI shop.</p>
+    </div>
+    <div class="stage"><div class="hl"><span class="we">We</span><span class="scr" id="C">modernize</span><span class="cursor">_</span></div></div>
+  </div>
+
+  <!-- OPTION D -->
+  <div class="opt">
+    <div class="meta">
+      <div class="tag">Option D</div>
+      <h2>Skew Slam</h2>
+      <p>Each verb slams in from below with a fast skew and settles — kinetic and confident, high energy. Feels like momentum.</p>
+    </div>
+    <div class="stage"><div class="hl"><span class="we">We</span><span class="slam" id="D"></span></div></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+const WORDS=["modernize","advise","transform","build","integrate","automate","rescue"];
+
+/* A — cube flip */
+(function(){
+  const host=document.getElementById('A');let i=0;
+  function set(first){
+    const el=document.createElement('span');el.className='word';el.textContent=WORDS[i];
+    host.appendChild(el);
+    const w=el.offsetWidth;host.style.minWidth=Math.max(w,60)+'px';
+    if(first){gsap.set(el,{rotateX:0,y:0,opacity:1});return el;}
+    gsap.set(el,{rotateX:-90,y:'40%',opacity:0,transformOrigin:'center bottom'});
+    gsap.to(el,{rotateX:0,y:0,opacity:1,duration:.6,ease:'power3.out'});
+    return el;
+  }
+  let cur=set(true);
+  setInterval(()=>{
+    gsap.to(cur,{rotateX:90,y:'-40%',opacity:0,duration:.5,ease:'power3.in',onComplete:(c=>()=>c.remove())(cur)});
+    i=(i+1)%WORDS.length;cur=set(false);
+  },2100);
+})();
+
+/* B — invert swap */
+(function(){
+  const host=document.getElementById('B');const word=host.querySelector('.word');let i=0;
+  setInterval(()=>{
+    host.classList.remove('on');void host.offsetWidth;host.classList.add('on');
+    setTimeout(()=>{i=(i+1)%WORDS.length;word.textContent=WORDS[i];},300);
+  },2100);
+})();
+
+/* C — decode scramble */
+(function(){
+  const host=document.getElementById('C');const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&/<>_";let i=0;
+  function scramble(target){
+    let frame=0;const len=target.length;const steps=16;
+    const iv=setInterval(()=>{
+      let out="";
+      for(let k=0;k<len;k++){
+        if(k< (frame/steps)*len){out+=target[k];}
+        else{out+=chars[Math.floor(Math.random()*chars.length)];}
+      }
+      host.textContent=out;frame++;
+      if(frame>steps){clearInterval(iv);host.textContent=target;}
+    },26);
+  }
+  scramble(WORDS[0]);
+  setInterval(()=>{i=(i+1)%WORDS.length;scramble(WORDS[i]);},2100);
+})();
+
+/* D — skew slam */
+(function(){
+  const host=document.getElementById('D');let i=0;
+  function set(first){
+    const el=document.createElement('span');el.className='word';el.textContent=WORDS[i];
+    host.appendChild(el);host.style.minWidth=Math.max(el.offsetWidth,60)+'px';
+    if(first){gsap.set(el,{y:0,skewY:0,opacity:1});return el;}
+    gsap.set(el,{y:'110%',skewY:8,opacity:0});
+    gsap.to(el,{y:0,skewY:0,opacity:1,duration:.5,ease:'back.out(1.6)'});
+    return el;
+  }
+  let cur=set(true);
+  setInterval(()=>{
+    gsap.to(cur,{y:'-110%',skewY:-8,opacity:0,duration:.42,ease:'power3.in',onComplete:(c=>()=>c.remove())(cur)});
+    i=(i+1)%WORDS.length;cur=set(false);
+  },2100);
+})();
+</script>
+</body>
+</html>

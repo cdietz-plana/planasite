@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan A — Infinite Cube Hero (exploration)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/plana.css">
+<style>
+  body{overflow-x:hidden}
+  .switcher{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:400;display:flex;gap:8px;
+    background:rgba(5,7,15,.72);backdrop-filter:blur(10px);border:1px solid var(--line);padding:8px;border-radius:100px}
+  .switcher a{font-family:"Space Grotesk";font-size:12px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--paper-dim);padding:9px 15px;border-radius:100px;transition:background .3s,color .3s}
+  .switcher a.on{background:var(--orange);color:#000}
+  .switcher a:hover{color:var(--paper)} .switcher a.on:hover{color:#000}
+
+  .stage{position:relative;height:100vh;min-height:620px;overflow:hidden;perspective:1900px}
+  .cube{position:absolute;inset:0;transform-style:preserve-3d}
+  .cube.stepped{transition:transform 1.15s cubic-bezier(.72,0,.18,1)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;display:flex;flex-direction:column;
+    justify-content:flex-end;padding-bottom:8vh;background:
+      radial-gradient(120% 80% at 72% 26%,rgba(255,90,22,.16),transparent 58%),
+      linear-gradient(180deg,#0B1020,#070B16);
+    box-shadow:inset 0 0 0 1px rgba(255,90,22,.20)}
+  .face .inner{max-width:1400px;margin:0 auto;padding:0 var(--pad);width:100%}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-family:"Space Grotesk";font-size:12px;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:22px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 14px var(--orange)}
+  .face h1{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:-.02em;
+    line-height:.9;font-size:clamp(52px,12vw,180px);margin-bottom:8px}
+  .face h1 .we{color:var(--paper)}
+  .face h1 .verb{color:var(--orange);display:block}
+  .face .subline{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;
+    font-size:clamp(16px,2.2vw,28px);color:var(--paper);margin-bottom:24px;max-width:22ch}
+  .face .row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;
+    border-top:1px solid var(--line);padding-top:20px}
+  .face .row p{max-width:380px;font-family:"Inter";font-size:15px;color:var(--paper-dim);line-height:1.55}
+  .face .cue{font-family:"Space Grotesk";font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-dim)}
+  .caret{color:var(--orange);animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .after{padding:80px 0;text-align:center;color:var(--paper-dim);font-family:"Space Grotesk";
+    text-transform:uppercase;letter-spacing:.14em;font-size:12px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <a href="?mode=roll" data-m="roll">Vertical Roll</a>
+  <a href="?mode=spin" data-m="spin">Horizontal Spin</a>
+  <a href="?mode=tumble" data-m="tumble">Continuous Tumble</a>
+</div>
+
+<div class="stage" id="stage">
+  <div class="cube" id="cube">
+    <div class="face" data-face></div>
+    <div class="face" data-face></div>
+    <div class="face" data-face></div>
+    <div class="face" data-face></div>
+  </div>
+</div>
+
+<div class="after">✳ Each face is a full hero — the whole section is one side of an infinite cube ✳</div>
+
+<script>
+const VERBS=["modernize","advise","transform","build","integrate","automate","rescue"];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mode=(new URLSearchParams(location.search).get("mode")||"roll").toLowerCase();
+document.querySelectorAll(".switcher a").forEach(a=>a.classList.toggle("on",a.dataset.m===mode));
+
+const faces=[...document.querySelectorAll("[data-face]")];
+const cube=document.getElementById("cube");
+const stage=document.getElementById("stage");
+
+/* build face content */
+function faceHTML(verb){
+  return `<div class="inner">
+    <div class="eyebrow"><span class="dot"></span> Plan A's Winning Formula</div>
+    <h1><span class="we">We</span><span class="verb">${verb}</span></h1>
+    <div class="subline">Software, AI, Agents, Data &amp; Enterprise Systems.</div>
+    <div class="row">
+      <p>Need elite engineering, creative and AI talent? Want a 24/7 tech team you can count on?</p>
+      <div class="cue">Scroll ✳</div>
+    </div>
+  </div>`;
+}
+faces.forEach((f,i)=>f.innerHTML=faceHTML(VERBS[i]));
+
+const AXIS = mode==="spin" ? "Y" : "X";
+const DEPTH = mode==="spin" ? "50vw" : "50vh";
+/* lay out faces around the axis */
+faces.forEach((f,i)=>{ f.style.transform=`rotate${AXIS}(${i*90}deg) translateZ(${DEPTH})`; });
+
+function verbEl(face){ return face.querySelector(".verb"); }
+const CH="ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&/<>_";
+function decode(el){
+  const target=el.textContent; let frame=0, steps=14, len=target.length;
+  const iv=setInterval(()=>{
+    let s=""; for(let k=0;k<len;k++){ s += (k<(frame/steps)*len)?target[k]:CH[Math.floor(Math.random()*CH.length)]; }
+    el.textContent=s; frame++; if(frame>steps){clearInterval(iv);el.textContent=target;}
+  },26);
+}
+
+/* mouse parallax via perspective-origin (doesn't touch cube transform) */
+addEventListener("mousemove",e=>{
+  const x=(e.clientX/innerWidth-.5), y=(e.clientY/innerHeight-.5);
+  stage.style.perspectiveOrigin=(50+x*10)+"% "+(50+y*10)+"%";
+});
+
+if(mode==="tumble"){
+  let ax=0, ay=0;
+  (function loop(){ ax+=0.28; ay+=0.16;
+    cube.style.transform=`translateZ(-${DEPTH.replace('vw','vh')}) rotateX(${ax}deg) rotateY(${ay}deg)`;
+    requestAnimationFrame(loop); })();
+} else {
+  cube.classList.add("stepped");
+  let step=0, verbIndex=4, angle=0, busy=false;
+  function apply(){ cube.style.transform=`translateZ(calc(-1 * ${DEPTH})) rotate${AXIS}(${angle}deg)`; }
+  apply();
+  decode(verbEl(faces[0]));
+  function advance(){
+    if(busy||reduce) return; busy=true;
+    angle-=90; step++; apply();
+    const front=((step%4)+4)%4, back=(front+2)%4;
+    const onEnd=()=>{
+      cube.removeEventListener("transitionend",onEnd);
+      // preload the face that will arrive in two steps
+      const v=verbEl(faces[back]); v.textContent=VERBS[verbIndex]; verbIndex=(verbIndex+1)%VERBS.length;
+      decode(verbEl(faces[front]));
+      busy=false;
+    };
+    cube.addEventListener("transitionend",onEnd);
+  }
+  if(!reduce) setInterval(advance,3400);
+}
+</script>
+</body>
+</html>

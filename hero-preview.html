@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan A — Hero Preview (A/B/C/D at full scale)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/plana.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  .switcher{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:300;display:flex;gap:8px;
+    background:rgba(5,7,15,.7);backdrop-filter:blur(10px);border:1px solid var(--line);padding:8px;border-radius:100px}
+  .switcher a{font-family:"Space Grotesk";font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--paper-dim);padding:9px 16px;border-radius:100px;transition:background .3s,color .3s}
+  .switcher a.on{background:var(--orange);color:#000}
+  .switcher a:hover{color:var(--paper)}
+  .switcher a.on:hover{color:#000}
+  .plabel{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:300;font-family:"Space Grotesk";
+    font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-dim);text-align:center}
+  .plabel b{color:var(--orange)}
+</style>
+</head>
+<body>
+
+<div class="switcher">
+  <a href="?mode=A" data-m="A">A · Cube Flip</a>
+  <a href="?mode=B" data-m="B">B · Invert</a>
+  <a href="?mode=C" data-m="C">C · Decode</a>
+  <a href="?mode=D" data-m="D">D · Slam</a>
+</div>
+
+<header class="hero">
+  <div class="hero-bg"><canvas id="fx"></canvas></div>
+  <div class="wrap">
+    <div class="hero-tag"><span class="dot"></span> Plan A's Winning Formula</div>
+    <h1 style="font-size:clamp(52px,12vw,180px)">
+      <span class="we">We</span><br>
+      <span class="rotator" id="rot" data-interval="2100" data-words="modernize,advise,transform,build,integrate,automate,rescue"></span>
+    </h1>
+    <div class="subline">Software, AI, Agents, Data &amp; Enterprise Systems.</div>
+    <div class="hero-sub">
+      <p>Need elite engineering, creative and AI talent? Want a 24/7 tech team you can count on?</p>
+      <div class="scrollcue">Scroll <span class="bar"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="plabel">Showing option <b id="plab">A</b> — use the switcher above to compare all four</div>
+
+<script>
+  var mode = (new URLSearchParams(location.search).get("mode") || "A").toUpperCase();
+  if(!/^[ABCD]$/.test(mode)) mode="A";
+  document.getElementById("rot").setAttribute("data-rotator", mode);
+  document.getElementById("plab").textContent = mode;
+  document.querySelectorAll(".switcher a").forEach(function(a){ a.classList.toggle("on", a.dataset.m===mode); });
+</script>
+<script src="assets/plana.js"></script>
+</body>
+</html>
