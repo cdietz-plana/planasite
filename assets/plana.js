@@ -32,7 +32,7 @@
     var dd=document.createElement("div"); dd.className="nav-dd";
     dd.innerHTML='<button class="nav-dd-toggle" type="button">Creative Studio <span class="cr">▾</span></button>'+
       '<div class="nav-dd-menu"><a href="'+prefix+'ux-studio.html">UX Studio</a>'+
-      '<a href="#" aria-disabled="true">Game Studio</a></div>';
+      '<a href="'+prefix+'game-studio/index.html">Game Studio</a></div>';
     var work=links.querySelector('a[href*="work.html"]');
     if(work) links.insertBefore(dd, work.nextSibling); else links.appendChild(dd);
     dd.querySelector(".nav-dd-toggle").addEventListener("click",function(e){
