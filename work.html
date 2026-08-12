@@ -4,26 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Work — Case Studies — Plan A Technologies</title>
-<meta name="description" content="Five engagements across gaming, financial services, healthcare, blue-collar and government — real problems, hard numbers, and results Plan A Technologies can point to.">
+<meta name="description" content="Explore Plan A Technologies' work across gaming, financial services, healthcare, blue-collar and government — real problems, hard numbers, and results we can point to.">
 <link rel="canonical" href="https://planatechnologies.com/work.html">
 <meta property="og:title" content="Our Work — Case Studies — Plan A Technologies">
 <meta property="og:description" content="Five engagements, five industries, five sets of results we can point to.">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Plan A Technologies">
+<meta property="og:url" content="https://planatechnologies.com/work.html">
+<meta property="og:image" content="https://planatechnologies.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Our Work — Case Studies — Plan A Technologies">
+<meta name="twitter:description" content="Five engagements, five industries, five sets of results we can point to.">
+<meta name="twitter:image" content="https://planatechnologies.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/plana.css?v=3">
+<link rel="stylesheet" href="assets/plana.css?v=11">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  /* Panel A "Real problems." sized to match panel B "Real solutions." */
+  .wwd-a .big{font-size:clamp(62px,13vw,230px);max-width:12ch;line-height:.9}
+  /* Panel C — "Real results." + project cards */
+  .wk-c-head{margin-bottom:clamp(18px,3.2vh,40px)}
+  .wk-c-title{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;font-size:clamp(40px,7vw,96px)}
+  .wk-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1vw,16px)}
+  .wk-card{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line);
+    min-height:clamp(240px,40vh,360px);text-align:left;cursor:pointer;background:var(--navy-2);
+    display:flex;align-items:flex-end;padding:0;color:inherit;font:inherit;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s}
+  .wk-card:hover{transform:translateY(-6px);border-color:rgba(255,90,22,.55)}
+  .wk-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;
+    filter:grayscale(1) brightness(.5);transform:scale(1.04);transition:filter .5s,transform .6s}
+  .wk-card:hover .wk-card-bg{filter:grayscale(0) brightness(.62);transform:scale(1.1)}
+  .wk-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,15,0) 28%,rgba(5,7,15,.92))}
+  .wk-card-in{position:relative;z-index:2;padding:clamp(14px,1.3vw,20px)}
+  .wk-card-num{font-family:"Space Grotesk";font-weight:700;font-size:13px;color:var(--orange);letter-spacing:.1em}
+  .wk-card-cat{display:block;font-family:"Space Grotesk";font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-dim);margin:8px 0 6px}
+  .wk-card h3{font-family:"Space Grotesk";font-weight:700;font-size:clamp(15px,1.1vw,19px);line-height:1.12;margin-bottom:8px}
+  .wk-card-metric{font-family:"Space Grotesk";font-size:12px;color:var(--paper)}
+  .wk-card-metric b{color:var(--orange)}
+  .wk-card .go{margin-top:12px;font-size:11px}
+  @media(max-width:1000px){
+    .wk-cards{grid-template-columns:none;display:flex;overflow-x:auto;gap:12px;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+    .wk-card{flex:0 0 78%;min-height:300px}
+  }
+  /* project modal (zoom-open, full screen) */
+  .wk-modal{position:fixed;inset:0;z-index:300;background:var(--navy);overflow-y:auto;visibility:hidden;opacity:0;will-change:transform,opacity}
+  .wk-modal.open{visibility:visible;opacity:1}
+  .wk-modal .mwrap{max-width:1100px;margin:0 auto;padding:clamp(80px,12vh,130px) var(--pad) clamp(60px,10vh,110px)}
+  .wk-close{position:fixed;top:22px;right:clamp(20px,5vw,60px);z-index:310;width:54px;height:54px;border-radius:50%;
+    background:rgba(244,241,234,.06);border:1px solid var(--line);color:var(--paper);font-size:20px;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+  .wk-close:hover{background:var(--orange);color:#000;border-color:var(--orange)}
+  .wk-modal .m-cat{font-family:"Space Grotesk";font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  .wk-modal h2{font-size:clamp(34px,6vw,80px);line-height:.94;margin-bottom:40px;max-width:20ch}
+  .wk-modal .m-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  @media(max-width:820px){.wk-modal .m-grid{grid-template-columns:1fr}}
+  .wk-modal .m-block{border-top:2px solid var(--orange);padding-top:20px}
+  .wk-modal .m-block h4{font-family:"Space Grotesk";font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+  .wk-modal .m-block p{color:var(--paper-dim);font-size:15px;line-height:1.65}
+  .wk-modal .m-metrics{display:flex;flex-wrap:wrap;gap:40px;margin-top:44px;padding-top:36px;border-top:1px solid var(--line)}
+  .wk-modal .m-metrics .n{font-family:"Space Grotesk";font-weight:700;font-size:clamp(30px,5vw,56px);color:var(--orange);line-height:1}
+  .wk-modal .m-metrics .t{margin-top:8px;font-size:13px;color:var(--paper-dim);max-width:22ch}
+  .wk-modal .m-foot{margin-top:52px}
+  body.wk-locked{overflow:hidden}
+</style>
 </head>
 <body>
 
-
 <!-- NAV -->
 <nav class="site"><div class="wrap nav-in">
-  <a class="brand" href="index.html">
-    <span class="mark"><b>A</b></span>
-    <span>Plan A<small>TECHNOLOGIES</small></span>
+  <a class="brand" href="index.html" aria-label="Plan A Technologies home">
+    <img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies">
   </a>
   <button class="nav-toggle" aria-label="Menu">☰</button>
   <div class="nav-links">
@@ -37,107 +89,89 @@
   </div>
 </div></nav>
 
-<!-- PAGE HERO -->
-<header class="pagehero">
-  <div class="wrap">
-    <div class="call">Real problems. Hard numbers.</div>
-    <h1>Selected <span class="o">Work</span></h1>
-    <p class="lead">Five engagements, five industries, five sets of results we can point to. Each was built, shipped, and measured.</p>
-  </div>
-</header>
+<!-- HERO → WHAT-WE-DO STYLE PINNED WIPE: Real Problems → Real Solutions → Real Results (projects) -->
+<h1 class="sr-only">Our work — real problems, real solutions, and real results from Plan A Technologies.</h1>
+<section class="wwd" id="work" style="height:400vh">
+  <div class="wwd-pin">
+    <div class="wwd-panel wwd-a">
+      <div class="wrap">
+        <div class="kicker">Selected work</div>
+        <h2 class="big">Real problems.</h2>
+      </div>
+    </div>
+    <div class="wwd-panel wwd-b">
+      <div class="wrap">
+        <div class="kicker">Selected work</div>
+        <h2 class="big">Real solutions.</h2>
+      </div>
+    </div>
+    <div class="wwd-panel wwd-c">
+      <div class="wrap">
+        <div class="wk-c-head">
+          <div class="kicker">Selected work</div>
+          <h2 class="wk-c-title">Real <span class="o">results.</span></h2>
+        </div>
+        <div class="wk-cards">
 
-<!-- WORK GRID -->
-<section class="rows reveal" style="padding-top:0">
-  <div class="wrap">
-    <div class="work-grid">
-      <a class="case" href="#palms"><div class="bg" style="background:linear-gradient(135deg,#B4471F,#2A0F06)"></div><div class="cat">Gaming · Marketing</div><h3>The Palms — Gamified Offers</h3><div class="metric"><b>+$32K</b>/mo revenue · <b>+103%</b> CTR</div></a>
-      <a class="case" href="#financial"><div class="bg" style="background:linear-gradient(135deg,#123048,#05131F)"></div><div class="cat">Financial Services · Modernization</div><h3>Legacy Platform Re-Architecture</h3><div class="metric">Stopped client churn · regulatory-compliant</div></a>
-      <a class="case" href="#healthcare"><div class="bg" style="background:linear-gradient(135deg,#1C4D45,#061714)"></div><div class="cat">Healthcare · Product</div><h3>Chronic Care Platform</h3><div class="metric">Clinically-monitored patient forum</div></a>
-      <a class="case" href="#dispatch"><div class="bg" style="background:linear-gradient(135deg,#4A3A12,#171204)"></div><div class="cat">Blue Collar · Platform</div><h3>Field Dispatch Modernization</h3><div class="metric"><b>20x</b> return via resale</div></a>
-      <a class="case" href="#civic"><div class="bg" style="background:linear-gradient(135deg,#2E2350,#0C0819)"></div><div class="cat">Government · Civic</div><h3>Tribal Citizen Portal</h3><div class="metric">Now white-labeled for other tribes</div></a>
-    </div>
-  </div>
-</section>
+          <button class="wk-card" data-target="palms">
+            <div class="wk-card-bg" style="background-image:url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=1200&q=70')"></div>
+            <div class="wk-card-in">
+              <span class="wk-card-num">01</span>
+              <span class="wk-card-cat">Gaming &amp; Hospitality</span>
+              <h3>The Palms — Gamified Offers</h3>
+              <div class="wk-card-metric"><b>+$32K</b>/mo · <b>+103%</b> CTR</div>
+              <span class="go">Open <span>→</span></span>
+            </div>
+          </button>
 
-<!-- CASE STUDY 1 — THE PALMS -->
-<section class="casestudy reveal" id="palms">
-  <div class="wrap">
-    <div class="sec-head"><h2>The Palms — Gamified Offers</h2><div class="idx">Gaming, Entertainment &amp; Hospitality</div></div>
-    <div class="cs-grid">
-      <div class="cs-block"><h4>The Challenge</h4><p>The Palms Casino Resort in Las Vegas wanted a new set of tools to drive additional hotel bookings to the property. They had been sending past guests a monthly email newsletter packed with promotions. The newsletter generated revenue, but the executive team wanted a way to increase direct hotel bookings. They turned to us.</p></div>
-      <div class="cs-block"><h4>The Solution</h4><p>We built a promotional engine the Palms could use to build custom games to incorporate into their newsletter. This made the communications far more interactive and exciting, and gave their marketing team a powerful new marketing tool to actually design and deploy their own custom gamified promotions. As a result, gamified promotions were incorporated into their emails to past guests, and rewards like loyalty points and dining offers were given to patrons to redeem during their next visit.</p></div>
-      <div class="cs-block"><h4>The Result</h4><p>In short, it worked. Patrons loved the games: Hotel revenues from the email newsletter jumped by $32,000 per month compared to the previous approach that didn't utilize our tools. Open rates on the email increased by 14%. Click-through rates to the booking engine skyrocketed by 103%.</p></div>
-    </div>
-    <div class="cs-metrics">
-      <div class="m"><div class="n">+$32K</div><div class="t">Added monthly newsletter revenue</div></div>
-      <div class="m"><div class="n">+14%</div><div class="t">Email open rate</div></div>
-      <div class="m"><div class="n">+103%</div><div class="t">Click-through to the booking engine</div></div>
-    </div>
-  </div>
-</section>
+          <button class="wk-card" data-target="financial">
+            <div class="wk-card-bg" style="background-image:url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=70')"></div>
+            <div class="wk-card-in">
+              <span class="wk-card-num">02</span>
+              <span class="wk-card-cat">Financial Services</span>
+              <h3>Legacy Re-Architecture</h3>
+              <div class="wk-card-metric">Compliant · churn stopped</div>
+              <span class="go">Open <span>→</span></span>
+            </div>
+          </button>
 
-<!-- CASE STUDY 2 — FINANCIAL SERVICES -->
-<section class="casestudy reveal" id="financial">
-  <div class="wrap">
-    <div class="sec-head"><h2>Legacy Platform Re-Architecture</h2><div class="idx">Financial Services</div></div>
-    <div class="cs-grid">
-      <div class="cs-block"><h4>The Challenge</h4><p>A large financial services client originally used Adobe Flash for its core platform. When Adobe announced it was sunsetting Flash, our client hired another company to create a new platform. Unfortunately, the other company built a profoundly flawed system that didn't follow any modern best practices or design patterns. One of the most egregious design flaws was the use of the front-end as part of the transaction flow. This led to a wide range of critical errors, many unhappy customers, and even lost client accounts. Plan A was hired to re-architect flawed sections of the platform while still keeping it operational in production.</p></div>
-      <div class="cs-block"><h4>The Solution</h4><p>Our engineers identified all the components that needed to be modified based on the transaction flow. We created automation tests to ensure no functionality would be lost post-conversion. We then designed a new transaction engine using event sourcing, circuit breaker design patterns, and much more. Plus, of course, we removed the front-end from the transactional workflow.</p></div>
-      <div class="cs-block"><h4>The Result</h4><p>This extremely challenging task generated deeply satisfying outcomes, including: Clear states of the transaction. Scalable and robust execution. Dramatic improvements in uptime and errors — we stopped emergencies related to the transactional engine. Avoided a second expensive rebuild. Made the solution compliant with new regulatory requirements. Stopped the bleed of clients. Enabled much faster uploads and downloads of key media. Launched new functionality.</p></div>
-    </div>
-    <div class="cs-metrics">
-      <div class="m"><div class="n">Uptime ↑</div><div class="t">Dramatic improvements in uptime and errors</div></div>
-      <div class="m"><div class="n">0</div><div class="t">Second expensive rebuild avoided</div></div>
-      <div class="m"><div class="n">Compliant</div><div class="t">Met new regulatory requirements</div></div>
-    </div>
-  </div>
-</section>
+          <button class="wk-card" data-target="healthcare">
+            <div class="wk-card-bg" style="background-image:url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=70')"></div>
+            <div class="wk-card-in">
+              <span class="wk-card-num">03</span>
+              <span class="wk-card-cat">Healthcare</span>
+              <h3>Chronic Care Platform</h3>
+              <div class="wk-card-metric">Secure · clinically-monitored</div>
+              <span class="go">Open <span>→</span></span>
+            </div>
+          </button>
 
-<!-- CASE STUDY 3 — HEALTHCARE -->
-<section class="casestudy reveal" id="healthcare">
-  <div class="wrap">
-    <div class="sec-head"><h2>Chronic Care Platform</h2><div class="idx">Healthcare</div></div>
-    <div class="cs-grid">
-      <div class="cs-block"><h4>The Challenge</h4><p>A hospital approached us about developing a new patient communication and engagement platform from scratch for patients suffering from chronic conditions. They wanted an informal forum for patients to connect with each other, with clinical moderators helping educate and motivate the group to comply with their clinical instructions to reduce adverse events and expensive hospital readmissions.</p></div>
-      <div class="cs-block"><h4>The Solution</h4><p>We collaborated with the hospital to create a secure, clinically-monitored forum for patients to ask questions, get support, and encourage other patients who ask to participate in the program. The platform closely tracks usage and has the ability to send out "red flag alerts" to nurses and/or family members if a patient either suddenly stops participating or raises serious issues that require immediate intervention.</p></div>
-      <div class="cs-block"><h4>The Result</h4><p>We've already received glowing feedback from patients and the hospital. The project is still in active development and continues to evolve; we look forward to being able to bring tools like this to other hospitals, insurance companies, gyms, and schools.</p></div>
-    </div>
-    <div class="cs-metrics">
-      <div class="m"><div class="n">Secure</div><div class="t">Clinically-monitored patient forum</div></div>
-      <div class="m"><div class="n">Real-time</div><div class="t">Red-flag alerts to nurses and family</div></div>
-    </div>
-  </div>
-</section>
+          <button class="wk-card" data-target="dispatch">
+            <div class="wk-card-bg" style="background-image:url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1200&q=70')"></div>
+            <div class="wk-card-in">
+              <span class="wk-card-num">04</span>
+              <span class="wk-card-cat">Blue Collar</span>
+              <h3>Field Dispatch Modernization</h3>
+              <div class="wk-card-metric"><b>20x</b> return via resale</div>
+              <span class="go">Open <span>→</span></span>
+            </div>
+          </button>
 
-<!-- CASE STUDY 4 — BLUE COLLAR / DISPATCH -->
-<section class="casestudy reveal" id="dispatch">
-  <div class="wrap">
-    <div class="sec-head"><h2>Field Dispatch Modernization</h2><div class="idx">Blue Collar Environments</div></div>
-    <div class="cs-grid">
-      <div class="cs-block"><h4>The Challenge</h4><p>This audio video installation company built their own proprietary software to dispatch electricians and installation staff to different jobs. Their product was promising, but it wasn't built using modern standards. What's more, the owners wanted to resell the software to other verticals that were non-competitive. They hired Plan A to modernize the dispatch software and add multi-tenant functionality, along with a long list of new features to allow the system to be resold to multiple new verticals that could also use dispatch software (such as lawn and pool care teams, plumbing companies, utility companies, and more).</p></div>
-      <div class="cs-block"><h4>The Solution</h4><p>We re-architected and rebuilt the solution from scratch using .NET and React, with a set of mobile apps built using ReactNative. The new solution was able to support new verticals and has expanded quickly.</p></div>
-      <div class="cs-block"><h4>The Result</h4><p>The new solution is far easier to use and boasts many more features, allowing staff in the field to take videos on their phones or tablets, present proposals to customers, collect payments, request additional help, and much more. A new analytics platform analyzes efficiency of employees in the field. The software automatically routes the closest person to the closest job, saving commuting time each day. Ownership has now been able to resell the solution to multiple other companies, generating more than 20x the amount of money that they spent with Plan A building the solution for themselves.</p></div>
-    </div>
-    <div class="cs-metrics">
-      <div class="m"><div class="n">20x</div><div class="t">Return generated via resale to new verticals</div></div>
-      <div class="m"><div class="n">Multi-tenant</div><div class="t">Rebuilt on .NET, React &amp; React Native</div></div>
-    </div>
-  </div>
-</section>
+          <button class="wk-card" data-target="civic">
+            <div class="wk-card-bg" style="background-image:url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=70')"></div>
+            <div class="wk-card-in">
+              <span class="wk-card-num">05</span>
+              <span class="wk-card-cat">Government</span>
+              <h3>Tribal Citizen Portal</h3>
+              <div class="wk-card-metric">Now white-labeled</div>
+              <span class="go">Open <span>→</span></span>
+            </div>
+          </button>
 
-<!-- CASE STUDY 5 — GOVERNMENT / CIVIC -->
-<section class="casestudy reveal" id="civic">
-  <div class="wrap">
-    <div class="sec-head"><h2>Tribal Citizen Portal</h2><div class="idx">Government &amp; Non-Profits</div></div>
-    <div class="cs-grid">
-      <div class="cs-block"><h4>The Challenge</h4><p>A tribe in the Pacific Northwest needed a citizen engagement platform to minimize the amount of manual labor being done to keep its tribal citizens informed and engaged. They turned to Plan A Technologies to build the solution from scratch.</p></div>
-      <div class="cs-block"><h4>The Solution</h4><p>We created a comprehensive citizen engagement portal solution for them. The tool allows citizens to vote on issues; apply for hunting and fishing licenses; register births, marriages, and deaths; view healthcare information; apply for jobs; update contact information; apply for education reimbursement credits; view received government benefits; and much more.</p></div>
-      <div class="cs-block"><h4>The Result</h4><p>The citizens are thrilled, and are looking forward to rolling out even more functionality in the near future. The tribe was so pleased that they're having us create a white-labeled version of the platform that can be sold to other tribal governments.</p></div>
+        </div>
+      </div>
     </div>
-    <div class="cs-metrics">
-      <div class="m"><div class="n">White-label</div><div class="t">Now being resold to other tribal governments</div></div>
-      <div class="m"><div class="n">1 portal</div><div class="t">Voting, licensing, benefits, jobs &amp; more</div></div>
-    </div>
+    <div class="wwd-hint">Scroll ✳</div>
   </div>
 </section>
 
@@ -155,12 +189,12 @@
 <footer class="site"><div class="wrap">
   <div class="foot-top">
     <div class="foot-col">
-      <a class="brand" href="index.html" style="margin-bottom:16px"><span class="mark"><b>A</b></span><span>Plan A<small>TECHNOLOGIES</small></span></a>
+      <a class="brand" href="index.html" style="margin-bottom:16px" aria-label="Plan A Technologies home"><img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies"></a>
       <p class="lede">Get a free (yes, free!) tech consultation when you reach out. We're easy to work with, we know what we're doing, and we make our customers look pretty awesome.</p>
     </div>
     <div class="foot-col"><h5>Company</h5><a href="about.html">About Us</a><a href="work.html">Our Work</a><a href="careers.html">Careers</a><a href="news.html">News</a></div>
     <div class="foot-col"><h5>What we do</h5><a href="services.html">Services</a><a href="industries.html">Industries</a><a href="contact.html">Contact</a></div>
-    <div class="foot-col"><h5>Get in touch</h5><a href="mailto:Sales@PlanAtechnologies.com">Sales@PlanAtechnologies.com</a><a href="tel:+18884814011">(888) 481-4011</a><a href="https://www.linkedin.com/company/plan-a-tech">LinkedIn</a><span style="display:block;font-size:13px;color:var(--paper-dim);margin-top:11px;line-height:1.5">10845 Griffith Peak Drive, Suite 200<br>Las Vegas, NV 89135</span></div>
+    <div class="foot-col"><h5>Get in touch</h5><a href="mailto:Sales@PlanAtechnologies.com">Sales@PlanAtechnologies.com</a><a href="tel:+18884814011">(888) 481-4011</a><a href="https://www.linkedin.com/company/plan-a-tech">LinkedIn</a></div>
   </div>
   <div class="foot-bot">
     <div>© 2026 Plan A Technologies, Inc. All rights reserved.</div>
@@ -168,6 +202,123 @@
   </div>
 </div></footer>
 
-<script src="assets/plana.js?v=3"></script>
+<!-- PROJECT MODALS (full content — crawlable, hidden until opened) -->
+<button class="wk-close" id="wkClose" aria-label="Close" style="display:none">✕</button>
+
+<article class="wk-modal" id="m-palms" role="dialog" aria-label="The Palms case study">
+  <div class="mwrap">
+    <div class="m-cat">Gaming, Entertainment &amp; Hospitality · Marketing</div>
+    <h2>The Palms — Gamified Offers</h2>
+    <div class="m-grid">
+      <div class="m-block"><h4>The Challenge</h4><p>The Palms Casino Resort in Las Vegas wanted new tools to drive additional hotel bookings. They'd been sending past guests a monthly promotional newsletter that generated revenue, but the executive team wanted a way to increase direct hotel bookings. They turned to us.</p></div>
+      <div class="m-block"><h4>The Solution</h4><p>We built a promotional engine the Palms could use to create custom games inside their newsletter — making communications far more interactive and giving their marketing team a powerful tool to design and deploy their own gamified promotions, with rewards like loyalty points and dining offers to redeem on the next visit.</p></div>
+      <div class="m-block"><h4>The Result</h4><p>In short, it worked. Patrons loved the games: hotel revenue from the newsletter jumped, open rates climbed, and click-throughs to the booking engine skyrocketed.</p></div>
+    </div>
+    <div class="m-metrics">
+      <div class="m"><div class="n">+$32K</div><div class="t">Added monthly newsletter revenue</div></div>
+      <div class="m"><div class="n">+14%</div><div class="t">Email open rate</div></div>
+      <div class="m"><div class="n">+103%</div><div class="t">Click-through to the booking engine</div></div>
+    </div>
+    <div class="m-foot"><a href="industries/gaming-entertainment-hospitality.html" class="disp" style="color:var(--orange);border-bottom:2px solid var(--orange);padding-bottom:4px">More gaming work →</a></div>
+  </div>
+</article>
+
+<article class="wk-modal" id="m-financial" role="dialog" aria-label="Legacy re-architecture case study">
+  <div class="mwrap">
+    <div class="m-cat">Financial Services · Modernization</div>
+    <h2>Legacy Platform Re-Architecture</h2>
+    <div class="m-grid">
+      <div class="m-block"><h4>The Challenge</h4><p>A large financial-services client's core platform ran on Adobe Flash. When Flash was sunset, another firm built a replacement that ignored modern best practices — even using the front-end as part of the transaction flow. The result: critical errors, unhappy customers, and lost accounts. Plan A was hired to re-architect the flawed sections while keeping it live in production.</p></div>
+      <div class="m-block"><h4>The Solution</h4><p>Our engineers mapped every component tied to the transaction flow, wrote automation tests to guarantee no lost functionality, then designed a new transaction engine using event sourcing, circuit-breaker patterns and more — and removed the front-end from the transactional workflow entirely.</p></div>
+      <div class="m-block"><h4>The Result</h4><p>Clear transaction states, scalable and robust execution, and dramatic improvements in uptime and errors. We stopped the transactional-engine emergencies, avoided a second expensive rebuild, met new regulatory requirements, and stopped the bleed of clients.</p></div>
+    </div>
+    <div class="m-metrics">
+      <div class="m"><div class="n">Uptime ↑</div><div class="t">Dramatic improvements in uptime &amp; errors</div></div>
+      <div class="m"><div class="n">1</div><div class="t">Expensive second rebuild avoided</div></div>
+      <div class="m"><div class="n">Compliant</div><div class="t">Met new regulatory requirements</div></div>
+    </div>
+    <div class="m-foot"><a href="industries/financial-services.html" class="disp" style="color:var(--orange);border-bottom:2px solid var(--orange);padding-bottom:4px">More FinTech work →</a></div>
+  </div>
+</article>
+
+<article class="wk-modal" id="m-healthcare" role="dialog" aria-label="Chronic care platform case study">
+  <div class="mwrap">
+    <div class="m-cat">Healthcare · Product</div>
+    <h2>Chronic Care Platform</h2>
+    <div class="m-grid">
+      <div class="m-block"><h4>The Challenge</h4><p>A hospital asked us to build a patient communication and engagement platform from scratch for people with chronic conditions — an informal forum where patients connect with each other, with clinical moderators educating and motivating the group to follow their care plans and reduce costly readmissions.</p></div>
+      <div class="m-block"><h4>The Solution</h4><p>We built a secure, clinically-monitored forum for patients to ask questions, get support, and encourage one another. It closely tracks usage and can send "red flag alerts" to nurses and/or family members if a patient suddenly disengages or raises serious issues needing immediate intervention.</p></div>
+      <div class="m-block"><h4>The Result</h4><p>We've received glowing feedback from patients and the hospital. The project is in active development and continues to evolve — and we look forward to bringing tools like it to other hospitals, insurers, gyms and schools.</p></div>
+    </div>
+    <div class="m-metrics">
+      <div class="m"><div class="n">Secure</div><div class="t">Clinically-monitored patient community</div></div>
+      <div class="m"><div class="n">Real-time</div><div class="t">Red-flag alerts to nurses &amp; family</div></div>
+    </div>
+    <div class="m-foot"><a href="industries/healthcare.html" class="disp" style="color:var(--orange);border-bottom:2px solid var(--orange);padding-bottom:4px">More healthcare work →</a></div>
+  </div>
+</article>
+
+<article class="wk-modal" id="m-dispatch" role="dialog" aria-label="Field dispatch case study">
+  <div class="mwrap">
+    <div class="m-cat">Blue Collar Environments · Platform</div>
+    <h2>Field Dispatch Modernization</h2>
+    <div class="m-grid">
+      <div class="m-block"><h4>The Challenge</h4><p>An audio-video installation company had built proprietary software to dispatch electricians and installers to jobs. It was promising but not built to modern standards — and the owners wanted to resell it to non-competitive verticals. They hired Plan A to modernize it and add multi-tenant functionality plus a long list of new features so it could be resold to lawn &amp; pool care, plumbing, utilities and more.</p></div>
+      <div class="m-block"><h4>The Solution</h4><p>We re-architected and rebuilt the solution from scratch on .NET and React, with mobile apps in React Native. The new platform supports new verticals and has expanded quickly.</p></div>
+      <div class="m-block"><h4>The Result</h4><p>Far easier to use and packed with features — field staff can shoot videos, present proposals, collect payments and request help; a new analytics platform measures field efficiency; and jobs auto-route to the closest person. Ownership has resold it to multiple companies, generating more than 20x what they spent building it.</p></div>
+    </div>
+    <div class="m-metrics">
+      <div class="m"><div class="n">20x</div><div class="t">Return generated via resale to new verticals</div></div>
+      <div class="m"><div class="n">Multi-tenant</div><div class="t">Rebuilt on .NET, React &amp; React Native</div></div>
+    </div>
+    <div class="m-foot"><a href="industries/blue-collar-environments.html" class="disp" style="color:var(--orange);border-bottom:2px solid var(--orange);padding-bottom:4px">More field &amp; frontline work →</a></div>
+  </div>
+</article>
+
+<article class="wk-modal" id="m-civic" role="dialog" aria-label="Tribal citizen portal case study">
+  <div class="mwrap">
+    <div class="m-cat">Government &amp; Non-Profits · Civic</div>
+    <h2>Tribal Citizen Portal</h2>
+    <div class="m-grid">
+      <div class="m-block"><h4>The Challenge</h4><p>A tribe in the Pacific Northwest needed a citizen-engagement platform to cut the manual labor of keeping tribal citizens informed and engaged. They turned to Plan A to build the solution from scratch.</p></div>
+      <div class="m-block"><h4>The Solution</h4><p>We created a comprehensive citizen portal: citizens can vote on issues; apply for hunting and fishing licenses; register births, marriages and deaths; view healthcare information; apply for jobs; update contact info; apply for education-reimbursement credits; view government benefits; and much more.</p></div>
+      <div class="m-block"><h4>The Result</h4><p>Citizens are thrilled and looking forward to more functionality. The tribe was so pleased they're having us build a white-labeled version that can be sold to other tribal governments.</p></div>
+    </div>
+    <div class="m-metrics">
+      <div class="m"><div class="n">White-label</div><div class="t">Now being resold to other tribal governments</div></div>
+      <div class="m"><div class="n">1 portal</div><div class="t">Voting, licensing, benefits, jobs &amp; more</div></div>
+    </div>
+    <div class="m-foot"><a href="industries/government-non-profit.html" class="disp" style="color:var(--orange);border-bottom:2px solid var(--orange);padding-bottom:4px">More government work →</a></div>
+  </div>
+</article>
+
+<script src="assets/plana.js?v=11"></script>
+<script>
+/* WORK — zoom-open project modals (wipe sequence handled by shared .wwd controller) */
+(function(){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var closeBtn=document.getElementById("wkClose"), current=null;
+  function openModal(id,ox,oy){
+    var m=document.getElementById("m-"+id); if(!m) return;
+    current=m; m.classList.add("open"); document.body.classList.add("wk-locked"); closeBtn.style.display="block";
+    if(window.gsap && !reduce){
+      m.style.transformOrigin=(ox||innerWidth/2)+"px "+(oy||innerHeight/2)+"px";
+      gsap.fromTo(m,{scale:.12,opacity:0},{scale:1,opacity:1,duration:.6,ease:"power3.out"});
+    }
+    m.scrollTop=0;
+  }
+  function closeModal(){
+    if(!current) return; var m=current;
+    if(window.gsap && !reduce){ gsap.to(m,{scale:.12,opacity:0,duration:.4,ease:"power3.in",onComplete:function(){ m.classList.remove("open"); m.style.transform=""; }}); }
+    else { m.classList.remove("open"); }
+    document.body.classList.remove("wk-locked"); closeBtn.style.display="none"; current=null;
+  }
+  document.querySelectorAll("[data-target]").forEach(function(el){
+    el.addEventListener("click",function(e){ openModal(el.getAttribute("data-target"), e.clientX, e.clientY); });
+  });
+  closeBtn.addEventListener("click",closeModal);
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeModal(); });
+}());
+</script>
 </body>
 </html>

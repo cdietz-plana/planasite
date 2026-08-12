@@ -12,9 +12,61 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/plana.css?v=3">
+<link rel="stylesheet" href="assets/plana.css?v=11">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  /* Expanding-panel accordion — Most requested services */
+  .svc-acc{display:flex;gap:10px;height:clamp(460px,64vh,640px)}
+  .svc-panel{position:relative;flex:1 1 0;min-width:56px;overflow:hidden;border-radius:18px;
+    border:1px solid var(--line);background:linear-gradient(160deg,var(--navy-3),var(--ink));
+    cursor:pointer;color:inherit;text-align:left;padding:0;font:inherit;
+    transition:flex-grow .62s cubic-bezier(.22,.7,.2,1),border-color .4s,background .55s}
+  .svc-panel[aria-expanded="true"]{flex-grow:6;border-color:rgba(255,90,22,.5)}
+  .svc-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;
+    filter:grayscale(1) brightness(.42);transform:scale(1.04);transition:filter .55s,transform .7s}
+  .svc-panel[aria-expanded="true"] .svc-bg{filter:grayscale(.15) brightness(.6);transform:scale(1.08)}
+  .svc-panel::after{content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(5,7,15,.15) 18%,rgba(5,7,15,.9))}
+  .svc-panel[aria-expanded="true"]::after{background:
+    radial-gradient(115% 90% at 88% 8%,rgba(255,90,22,.24),transparent 55%),
+    linear-gradient(180deg,rgba(5,7,15,.08) 10%,rgba(5,7,15,.92))}
+  .svc-idx{position:absolute;top:20px;left:0;right:0;text-align:center;font-family:"Space Grotesk";
+    font-weight:700;font-size:22px;color:var(--orange);letter-spacing:.05em;z-index:3;transition:font-size .5s}
+  .svc-panel[aria-expanded="true"] .svc-idx{left:clamp(26px,3vw,48px);right:auto;text-align:left;font-size:clamp(30px,3.2vw,48px)}
+  .svc-spine{position:absolute;left:50%;bottom:26px;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;
+    font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:.02em;
+    font-size:clamp(15px,1.25vw,20px);white-space:nowrap;color:var(--paper);opacity:.9;transition:opacity .3s;z-index:2}
+  .svc-panel[aria-expanded="true"] .svc-spine{opacity:0;pointer-events:none}
+  .svc-content{position:absolute;left:0;bottom:0;width:100%;max-width:660px;padding:clamp(26px,3vw,48px);z-index:2;
+    opacity:0;transform:translateY(16px);transition:opacity .5s .1s,transform .55s .1s;pointer-events:none}
+  .svc-panel[aria-expanded="true"] .svc-content{opacity:1;transform:none;pointer-events:auto}
+  .svc-tag{display:inline-block;font-family:"Space Grotesk";font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--orange);border:1px solid rgba(255,90,22,.4);padding:5px 13px;border-radius:100px;margin-bottom:16px}
+  .svc-content h3{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:-.01em;
+    font-size:clamp(25px,3.3vw,50px);line-height:.98;margin-bottom:15px;max-width:15ch}
+  .svc-content p{color:var(--paper-dim);font-size:clamp(14px,1.25vw,16.5px);line-height:1.62;max-width:52ch;margin-bottom:20px}
+  .svc-content .go{display:inline-flex;align-items:center;gap:8px;font-family:"Space Grotesk";font-weight:700;
+    font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange)}
+  .svc-content .go span{transition:transform .3s}
+  .svc-panel[aria-expanded="true"]:hover .go span{transform:translateX(6px)}
+  @media(max-width:820px){
+    .svc-acc{flex-direction:column;height:auto;gap:12px}
+    .svc-acc .svc-panel{flex:none;min-width:0;min-height:auto}
+    .svc-acc .svc-spine{display:none}
+    .svc-acc .svc-idx{position:static;text-align:left;padding:22px 24px 0;font-size:26px}
+    .svc-acc .svc-content{position:static;opacity:1;transform:none;pointer-events:auto;padding-top:10px;max-width:none}
+  }
+</style>
+  <meta property="og:url" content="https://planatechnologies.com/services.html">
+  <meta property="og:image" content="https://planatechnologies.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services — Plan A Technologies">
+  <meta name="twitter:description" content="AI strategy, data foundations, intelligent agents, software engineering and 24/7 managed support.">
+  <meta name="twitter:image" content="https://planatechnologies.com/og-image.png">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What services does Plan A Technologies offer?", "acceptedAnswer": {"@type": "Answer", "text": "Plan A offers five core services — AI strategy & CTO advisory, data & AI foundations, AI agents & intelligent automation, software engineering & modernization, and 24/7 managed technical support — backed by more than 20 capabilities spanning custom software, cloud migration, DevOps, UI/UX and cybersecurity."}}, {"@type": "Question", "name": "How do you engage with clients — project work or staffing?", "acceptedAnswer": {"@type": "Answer", "text": "Both. We take on fully-managed project work, provide dedicated talent (human engineers or AI agents) for individual roles or entire teams, and offer tech consulting and emergency support. You can scale the engagement up or down as your needs change."}}, {"@type": "Question", "name": "Do you build with AI or traditional engineering?", "acceptedAnswer": {"@type": "Answer", "text": "Both, deliberately. We still do the hard custom development, integration and modernization work we've always done, and we use AI agents alongside expert engineers to deliver it faster and more efficiently."}}]}
+</script>
 </head>
 <body>
 
@@ -22,8 +74,7 @@
 <!-- NAV -->
 <nav class="site"><div class="wrap nav-in">
   <a class="brand" href="index.html">
-    <span class="mark"><b>A</b></span>
-    <span>Plan A<small>TECHNOLOGIES</small></span>
+    <img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies">
   </a>
   <button class="nav-toggle" aria-label="Menu">☰</button>
   <div class="nav-links">
@@ -39,87 +90,124 @@
 
 <!-- PAGE HERO -->
 <header class="pagehero">
+  <div class="pagehero-bg" style="background-image:url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=70')"></div>
+  <div class="shape ring" style="width:360px;height:360px;top:-120px;right:-90px"></div>
+  <div class="shape ring2" style="width:520px;height:520px;bottom:-280px;right:6%"></div>
   <div class="wrap">
     <div class="call">Old-School Software Craftsmanship. Modern AI Execution.</div>
-    <h1>What We <span class="o">Do</span></h1>
+    <h1 class="sr-only">Software development, AI, data engineering and IT services from Plan A Technologies.</h1>
+    <div class="ph-title">What We <span class="o">Do</span></div>
     <p class="lead">From AI strategy to 24/7 managed support, we design, build, modernize and run the software that can't fail. Here's how we help.</p>
+    <div class="hero-metrics">
+      <div class="hm"><b><span class="num" data-to="5"><span class="v">0</span></span></b><span>Core service lines</span></div>
+      <div class="hm"><b><span class="num" data-to="20"><span class="v">0</span></span>+</b><span>Capabilities under one roof</span></div>
+      <div class="hm"><b><span class="num" data-to="500"><span class="v">0</span></span>+</b><span>Products deployed</span></div>
+      <div class="hm"><b>24/7</b><span>Managed support, always on</span></div>
+    </div>
   </div>
 </header>
 
 <!-- MOST REQUESTED SERVICES -->
 <section class="rows reveal" id="services">
   <div class="wrap">
-    <div class="sec-head"><h2>Most requested services</h2><div class="idx">(05 core offerings)</div></div>
-    <div class="srow">
-      <div class="num">01</div>
-      <div>
-        <span class="name">AI Strategy &amp; CTO Advisory</span>
-        <p class="desc">We provide senior-level guidance on how to approach AI transformation across the enterprise. We help leadership teams cut through the noise, identify real opportunities, manage risk, and build a roadmap that makes technical and business sense.</p>
+    <div class="sec-head"><h2>Most requested services</h2><div class="idx">(05 core offerings · hover to explore)</div></div>
+    <div class="svc-acc" id="svcAcc">
+
+      <div class="svc-panel" role="button" tabindex="0" aria-expanded="true">
+        <div class="svc-bg" style="background-image:url('https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=70')"></div>
+        <span class="svc-idx">01</span>
+        <span class="svc-spine">AI Strategy &amp; CTO Advisory</span>
+        <div class="svc-content">
+          <span class="svc-tag">Advisory</span>
+          <h3>AI Strategy &amp; CTO Advisory</h3>
+          <p>Senior-level guidance on how to approach AI transformation across the enterprise. We help leadership teams cut through the noise, identify real opportunities, manage risk, and build a roadmap that makes technical and business sense.</p>
+          <a class="go" href="contact.html">Talk to us <span>→</span></a>
+        </div>
       </div>
-      <div class="tag">Advisory</div>
-    </div>
-    <div class="srow">
-      <div class="num">02</div>
-      <div>
-        <span class="name">Data &amp; AI Foundations</span>
-        <p class="desc">AI is only as good as the data beneath it. We design and optimize modern data infrastructure across AWS, Microsoft, Google, Salesforce, OpenAI, Anthropic, Databricks and other enterprise ecosystems, including medallion-style data architectures and governance-minded pipelines.</p>
+
+      <div class="svc-panel" role="button" tabindex="0" aria-expanded="false">
+        <div class="svc-bg" style="background-image:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=70')"></div>
+        <span class="svc-idx">02</span>
+        <span class="svc-spine">Data &amp; AI Foundations</span>
+        <div class="svc-content">
+          <span class="svc-tag">Data</span>
+          <h3>Data &amp; AI Foundations</h3>
+          <p>AI is only as good as the data beneath it. We design and optimize modern data infrastructure across AWS, Microsoft, Google, Salesforce, OpenAI, Anthropic, Databricks and other ecosystems — including medallion-style architectures and governance-minded pipelines.</p>
+          <a class="go" href="contact.html">Talk to us <span>→</span></a>
+        </div>
       </div>
-      <div class="tag">Data</div>
-    </div>
-    <div class="srow">
-      <div class="num">03</div>
-      <div>
-        <span class="name">AI Agents &amp; Intelligent Automation</span>
-        <p class="desc">We build secure copilots, agentic workflows, enterprise automation systems, and autonomous solutions that help teams move faster, reduce manual work, improve decision-making, and unlock new operating leverage.</p>
+
+      <div class="svc-panel" role="button" tabindex="0" aria-expanded="false">
+        <div class="svc-bg" style="background-image:url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=70')"></div>
+        <span class="svc-idx">03</span>
+        <span class="svc-spine">AI Agents &amp; Automation</span>
+        <div class="svc-content">
+          <span class="svc-tag">Agents</span>
+          <h3>AI Agents &amp; Intelligent Automation</h3>
+          <p>We build secure copilots, agentic workflows, enterprise automation systems, and autonomous solutions that help teams move faster, reduce manual work, improve decision-making, and unlock new operating leverage.</p>
+          <a class="go" href="contact.html">Talk to us <span>→</span></a>
+        </div>
       </div>
-      <div class="tag">Agents</div>
-    </div>
-    <div class="srow">
-      <div class="num">04</div>
-      <div>
-        <span class="name">Software Engineering &amp; Modernization</span>
-        <p class="desc">From new platforms to legacy overhauls, we build, modernize, integrate, fix, and support complex software systems that can't fail and must perform under pressure.</p>
+
+      <div class="svc-panel" role="button" tabindex="0" aria-expanded="false">
+        <div class="svc-bg" style="background-image:url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=70')"></div>
+        <span class="svc-idx">04</span>
+        <span class="svc-spine">Engineering &amp; Modernization</span>
+        <div class="svc-content">
+          <span class="svc-tag">Engineering</span>
+          <h3>Software Engineering &amp; Modernization</h3>
+          <p>From new platforms to legacy overhauls, we build, modernize, integrate, fix, and support complex software systems that can't fail and must perform under pressure.</p>
+          <a class="go" href="contact.html">Talk to us <span>→</span></a>
+        </div>
       </div>
-      <div class="tag">Engineering</div>
-    </div>
-    <div class="srow">
-      <div class="num">05</div>
-      <div>
-        <span class="name">24/7 Managed Technical Support</span>
-        <p class="desc">When something breaks, stalls, or needs immediate attention, our clients know exactly who to call. We provide veteran technical support and engineering coverage that keeps mission-critical systems moving.</p>
+
+      <div class="svc-panel" role="button" tabindex="0" aria-expanded="false">
+        <div class="svc-bg" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=70')"></div>
+        <span class="svc-idx">05</span>
+        <span class="svc-spine">24/7 Managed Support</span>
+        <div class="svc-content">
+          <span class="svc-tag">Support</span>
+          <h3>24/7 Managed Technical Support</h3>
+          <p>When something breaks, stalls, or needs immediate attention, our clients know exactly who to call. We provide veteran technical support and engineering coverage that keeps mission-critical systems moving.</p>
+          <a class="go" href="contact.html">Talk to us <span>→</span></a>
+        </div>
       </div>
-      <div class="tag">Support</div>
+
     </div>
   </div>
 </section>
 
 <!-- FULL EXPERTISE -->
 <section class="rows reveal" id="expertise" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><h2>Full expertise</h2><div class="idx">(20 capabilities)</div></div>
-    <div class="chips cols3">
-      <a class="chip" href="contact.html">CTO &amp; CIO Advice</a>
-      <a class="chip" href="contact.html">AI Strategy &amp; Governance</a>
-      <a class="chip" href="contact.html">Agentic AI Design &amp; Deployment</a>
-      <a class="chip" href="contact.html">Custom Software</a>
-      <a class="chip" href="contact.html">Application Modernization</a>
-      <a class="chip" href="contact.html">Cloud Strategy &amp; Migrations</a>
-      <a class="chip" href="contact.html">Identity &amp; Access Management</a>
-      <a class="chip" href="contact.html">Software Architecture</a>
-      <a class="chip" href="contact.html">System Integrations</a>
-      <a class="chip" href="contact.html">Data Engineering &amp; Intelligence</a>
-      <a class="chip" href="contact.html">The Business Side of Tech</a>
-      <a class="chip" href="contact.html">Lakehouse, Warehouse &amp; Data Architecture</a>
-      <a class="chip" href="contact.html">Project Management</a>
-      <a class="chip" href="contact.html">DevOps, DevSecOps &amp; FinOps</a>
-      <a class="chip" href="contact.html">Mobile Development</a>
-      <a class="chip" href="contact.html">Product Design</a>
-      <a class="chip" href="contact.html">UI/UX Design &amp; Art</a>
-      <a class="chip" href="contact.html">Cybersecurity</a>
-      <a class="chip" href="contact.html">Automation</a>
-      <a class="chip" href="contact.html">Tech Assessments</a>
+  <div class="wrap"><div class="exp-2col">
+    <div class="exp-head">
+      <div class="kicker">Full expertise</div>
+      <h2>20 capabilities, one team</h2>
+      <p class="exp-note">Whatever the challenge, we've probably shipped it before.</p>
     </div>
-  </div>
+    <div class="exp-drop">
+      <span class="pill c1">CTO &amp; CIO Advice</span>
+      <span class="pill c3">AI Strategy &amp; Governance</span>
+      <span class="pill c2">Agentic AI Design &amp; Deployment</span>
+      <span class="pill c3">Custom Software</span>
+      <span class="pill c4">Application Modernization</span>
+      <span class="pill c3">Cloud Strategy &amp; Migrations</span>
+      <span class="pill c2">Identity &amp; Access Management</span>
+      <span class="pill c3">Software Architecture</span>
+      <span class="pill c1">System Integrations</span>
+      <span class="pill c3">Data Engineering &amp; Intelligence</span>
+      <span class="pill c4">The Business Side of Tech</span>
+      <span class="pill c2">Lakehouse, Warehouse &amp; Data Architecture</span>
+      <span class="pill c3">Project Management</span>
+      <span class="pill c3">DevOps, DevSecOps &amp; FinOps</span>
+      <span class="pill c1">Mobile Development</span>
+      <span class="pill c4">Product Design</span>
+      <span class="pill c2">UI/UX Design &amp; Art</span>
+      <span class="pill c3">Cybersecurity</span>
+      <span class="pill c3">Automation</span>
+      <span class="pill c4">Tech Assessments</span>
+    </div>
+  </div></div>
 </section>
 
 <!-- ENGAGEMENT MODELS -->
@@ -144,11 +232,24 @@
   </div>
 </section>
 
+
+<!-- FAQ (AEO answer-first + FAQPage schema) -->
+<section class="rows reveal" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><h2>Frequently asked questions</h2><div class="idx">(3 common questions)</div></div>
+    <div class="faq">
+      <details><summary>What services does Plan A Technologies offer?</summary><p>Plan A offers five core services — AI strategy & CTO advisory, data & AI foundations, AI agents & intelligent automation, software engineering & modernization, and 24/7 managed technical support — backed by more than 20 capabilities spanning custom software, cloud migration, DevOps, UI/UX and cybersecurity.</p></details>
+      <details><summary>How do you engage with clients — project work or staffing?</summary><p>Both. We take on fully-managed project work, provide dedicated talent (human engineers or AI agents) for individual roles or entire teams, and offer tech consulting and emergency support. You can scale the engagement up or down as your needs change.</p></details>
+      <details><summary>Do you build with AI or traditional engineering?</summary><p>Both, deliberately. We still do the hard custom development, integration and modernization work we've always done, and we use AI agents alongside expert engineers to deliver it faster and more efficiently.</p></details>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="site"><div class="wrap">
   <div class="foot-top">
     <div class="foot-col">
-      <a class="brand" href="index.html" style="margin-bottom:16px"><span class="mark"><b>A</b></span><span>Plan A<small>TECHNOLOGIES</small></span></a>
+      <a class="brand" href="index.html" style="margin-bottom:16px"><img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies"></a>
       <p class="lede">Get a free (yes, free!) tech consultation when you reach out. We're easy to work with, we know what we're doing, and we make our customers look pretty awesome.</p>
     </div>
     <div class="foot-col"><h5>Company</h5><a href="about.html">About Us</a><a href="work.html">Our Work</a><a href="careers.html">Careers</a><a href="news.html">News</a></div>
@@ -161,6 +262,26 @@
   </div>
 </div></footer>
 
-<script src="assets/plana.js?v=3"></script>
+<script src="assets/plana.js?v=11"></script>
+<script>
+/* Most requested services — expanding accordion */
+(function(){
+  var acc=document.getElementById("svcAcc"); if(!acc) return;
+  var panels=[].slice.call(acc.querySelectorAll(".svc-panel"));
+  var hover=matchMedia("(hover:hover) and (pointer:fine)").matches;
+  function activate(p){ panels.forEach(function(x){ x.setAttribute("aria-expanded", x===p?"true":"false"); }); }
+  panels.forEach(function(p){
+    if(hover) p.addEventListener("mouseenter",function(){ activate(p); });
+    p.addEventListener("click",function(e){
+      if(e.target.closest("a")) return; // let the "Talk to us" link work
+      activate(p);
+    });
+    p.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "){ if(e.target===p){ e.preventDefault(); activate(p); } }
+    });
+    p.addEventListener("focusin",function(){ activate(p); }); // expand when tabbing into it
+  });
+}());
+</script>
 </body>
 </html>

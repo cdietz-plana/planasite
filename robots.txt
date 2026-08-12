@@ -1,0 +1,8 @@
+# Plan A Technologies — robots.txt
+User-agent: *
+Allow: /
+Disallow: /headline-lab.html
+Disallow: /hero-cube.html
+Disallow: /hero-preview.html
+
+Sitemap: https://planatechnologies.com/sitemap.xml

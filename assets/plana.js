@@ -40,6 +40,35 @@
     });
   })();
 
+  /* ---------- Nav: turn Industries into a dropdown ---------- */
+  (function(){
+    if(!links || links.querySelector(".nav-dd-ind")) return;
+    var ind=links.querySelector('a[href$="industries.html"]');
+    if(!ind) return;
+    var prefix=(/^\.\.\//.test(ind.getAttribute("href"))) ? "../" : "";
+    var wasActive=ind.classList.contains("active");
+    var dd=document.createElement("div"); dd.className="nav-dd nav-dd-ind";
+    dd.innerHTML='<button class="nav-dd-toggle'+(wasActive?" active":"")+'" type="button">Industries <span class="cr">▾</span></button>'+
+      '<div class="nav-dd-menu">'+
+      '<a href="'+prefix+'industries.html">All Industries</a>'+
+      '<a href="'+prefix+'industries/high-tech.html">High Tech</a>'+
+      '<a href="'+prefix+'industries/gaming-entertainment-hospitality.html">Gaming, Entertainment &amp; Hospitality</a>'+
+      '<a href="'+prefix+'industries/healthcare.html">Healthcare</a>'+
+      '<a href="'+prefix+'industries/financial-services.html">Financial Services</a>'+
+      '<a href="'+prefix+'industries/blue-collar-environments.html">Blue Collar Environments</a>'+
+      '<a href="'+prefix+'industries/government-non-profit.html">Government &amp; Non-Profits</a>'+
+      '</div>';
+    ind.parentNode.replaceChild(dd, ind);
+    dd.querySelector(".nav-dd-toggle").addEventListener("click",function(e){
+      e.stopPropagation(); dd.classList.toggle("open");
+    });
+  })();
+
+  /* close any open nav dropdown when clicking elsewhere */
+  document.addEventListener("click",function(){
+    document.querySelectorAll(".nav-dd.open").forEach(function(d){ d.classList.remove("open"); });
+  });
+
   /* ---------- Marquees (infinite loop) ---------- */
   function mq(el, dir){
     if(!el || !window.gsap) return;
@@ -75,7 +104,7 @@
   if(!reduce){
     gsap.utils.toArray(".reveal, .sec-head, .tile, .case, .cube, .reason, .cs-block, .process .step, .cta h2, .cta .btn, .logos .lead")
       .forEach(function(el){
-        gsap.from(el, {y:42, opacity:0, duration:.9, ease:"power3.out",
+        gsap.fromTo(el, {y:42, opacity:0}, {y:0, opacity:1, duration:.9, ease:"power3.out",
           scrollTrigger:{trigger:el, start:"top 88%"}});
       });
     gsap.from(".logo-grid div", {opacity:0, y:22, duration:.5, stagger:.03, ease:"power2.out",
@@ -355,6 +384,57 @@
         if(!counted && p>0.66){ counted=true; runCount(); }
       }});
   })();
+
+  /* ---------- EXPERTISE pills fall + settle into a perfect grid ---------- */
+  document.querySelectorAll(".exp-drop").forEach(function(box){
+    var pills=box.querySelectorAll(".pill");
+    if(reduce || !window.gsap){ return; }
+    gsap.set(pills,{transformOrigin:"center center"});
+    gsap.from(pills, {
+      y:function(){ return -(160 + Math.random()*120); },   // fall from above the tray
+      rotation:function(){ return Math.random()*16 - 8; },   // slight tumble
+      opacity:0,
+      duration:0.9,
+      ease:"bounce.out",                                     // gravity bounce as it lands
+      stagger:{each:0.055, from:"start"},
+      scrollTrigger:{trigger:box, start:"top 80%"}
+    });
+  });
+
+  /* ---------- HORIZONTAL-SCROLL SHOWCASE ---------- */
+  document.querySelectorAll(".hscroll").forEach(function(sec){
+    var track=sec.querySelector(".hscroll-track"); if(!track) return;
+    var bar=sec.querySelector(".hs-progress i"), countEl=sec.querySelector(".hs-count b");
+    var n=track.children.length;
+    if(reduce || !window.ScrollTrigger || window.innerWidth<=820){ sec.classList.add("plain"); return; }
+    ScrollTrigger.create({trigger:sec,start:"top top",end:"bottom bottom",scrub:0.6,
+      onUpdate:function(s){ var p=s.progress;
+        track.style.transform="translateX("+(-p*(n-1)*100).toFixed(3)+"vw)";
+        if(bar) bar.style.width=(p*100).toFixed(1)+"%";
+        if(countEl) countEl.textContent=Math.min(n, Math.floor(p*n)+1);
+      }});
+  });
+
+  /* ---------- CASE STUDY sequence (Challenge → Solution → Result) ---------- */
+  document.querySelectorAll(".csx").forEach(function(sec){
+    var steps=Array.prototype.slice.call(sec.querySelectorAll(".csx-step"));
+    var rail=Array.prototype.slice.call(sec.querySelectorAll(".csx-rail span"));
+    var bar=sec.querySelector(".csx-progress i");
+    var n=steps.length; if(!n) return;
+    function show(k){ steps.forEach(function(s,i){ s.classList.toggle("on",i===k); });
+      rail.forEach(function(r,i){ r.classList.toggle("on",i===k); }); }
+    show(0);
+    if(reduce || !window.ScrollTrigger){
+      var pin=sec.querySelector(".csx-pin");
+      pin.style.position="static"; pin.style.height="auto"; pin.style.display="block";
+      steps.forEach(function(s){ s.style.position="relative"; s.style.opacity="1"; s.style.transform="none"; s.style.marginBottom="30px"; });
+      rail.forEach(function(r){ r.classList.add("on"); });
+      return;
+    }
+    ScrollTrigger.create({trigger:sec,start:"top top",end:"bottom bottom",scrub:0.5,
+      onUpdate:function(s){ var p=s.progress; if(bar) bar.style.width=(p*100).toFixed(1)+"%";
+        show(Math.min(n-1, Math.floor(p*n + 0.00001))); }});
+  });
 
   /* ---------- INVERT CTA (scroll-driven wipe) ---------- */
   (function(){

@@ -12,9 +12,38 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/plana.css?v=3">
+<link rel="stylesheet" href="assets/plana.css?v=11">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  /* Scrambling headline */
+  .ind-headline{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:-.02em;
+    line-height:.92;font-size:clamp(46px,8.6vw,150px);margin:14px 0 0}
+  /* Category cards */
+  .ind-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.4vw,22px)}
+  .ind-card{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line);
+    min-height:clamp(240px,32vh,320px);cursor:pointer;background:var(--navy-2);
+    display:flex;align-items:flex-end;text-decoration:none;color:inherit;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s}
+  .ind-card:hover{transform:translateY(-6px);border-color:rgba(255,90,22,.55)}
+  .ind-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;
+    filter:grayscale(1) brightness(.5);transform:scale(1.04);transition:filter .5s,transform .6s}
+  .ind-card:hover .ind-card-bg{filter:grayscale(0) brightness(.62);transform:scale(1.1)}
+  .ind-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,15,0) 26%,rgba(5,7,15,.92))}
+  .ind-card-in{position:relative;z-index:2;padding:clamp(16px,1.5vw,24px)}
+  .ind-card-num{font-family:"Space Grotesk";font-weight:700;font-size:13px;color:var(--orange);letter-spacing:.1em}
+  .ind-card h2{font-family:"Space Grotesk";font-weight:700;font-size:clamp(17px,1.35vw,23px);line-height:1.08;margin:9px 0 7px}
+  .ind-card p{font-family:"Inter";font-size:13px;color:var(--paper-dim);line-height:1.5;margin-bottom:12px}
+  .ind-card .go{font-size:11px}
+  @media(max-width:900px){.ind-cards{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.ind-cards{grid-template-columns:1fr}}
+</style>
+  <meta property="og:url" content="https://planatechnologies.com/industries.html">
+  <meta property="og:image" content="https://planatechnologies.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Industries We Serve — Plan A Technologies">
+  <meta name="twitter:description" content="Nearly 20 years across six verticals. We speak your regulations, your acronyms, and your edge cases.">
+  <meta name="twitter:image" content="https://planatechnologies.com/og-image.png">
 </head>
 <body>
 
@@ -22,8 +51,7 @@
 <!-- NAV -->
 <nav class="site"><div class="wrap nav-in">
   <a class="brand" href="index.html">
-    <span class="mark"><b>A</b></span>
-    <span>Plan A<small>TECHNOLOGIES</small></span>
+    <img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies">
   </a>
   <button class="nav-toggle" aria-label="Menu">☰</button>
   <div class="nav-links">
@@ -37,26 +65,50 @@
   </div>
 </div></nav>
 
-<!-- PAGE HERO -->
+<!-- HERO -->
 <header class="pagehero">
   <div class="wrap">
-    <div class="call">We don't just write code — we know your business.</div>
-    <h1>Industries We <span class="o">Serve</span></h1>
-    <p class="lead">Nearly 20 years across six verticals. We speak your regulations, your acronyms, and your edge cases.</p>
+    <div class="kicker">Six verticals · nearly 20 years</div>
+    <h1 class="ind-headline" id="indHeadline"><span class="o">Industries</span> we serve.</h1>
+    <p class="lead">We don't just write code — we know your business. We speak your regulations, your acronyms, and your edge cases.</p>
   </div>
 </header>
 
-<!-- INDUSTRIES GRID -->
-<section class="rows reveal" id="industries" style="padding-top:0">
+<!-- CATEGORY CARDS -->
+<section class="rows" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2>Six verticals we know cold</h2><div class="idx">(06 verticals)</div></div>
-    <div class="cardgrid">
-      <a class="tile" href="industries/high-tech.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M2 20h20M9 16v4M15 16v4"/></svg><h3>High Tech</h3><p>Product companies, SaaS platforms and scale-ups that need serious engineering firepower.</p><span class="go">Explore <span>→</span></span></a>
-      <a class="tile" href="industries/gaming-entertainment-hospitality.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="3"/><circle cx="8" cy="12" r="1.4"/><circle cx="16" cy="12" r="1.4"/></svg><h3>Gaming, Entertainment &amp; Hospitality</h3><p>Casinos, resorts, lotteries, iGaming and game studios — our founding vertical.</p><span class="go">Explore <span>→</span></span></a>
-      <a class="tile" href="industries/healthcare.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9z"/><path d="M12 8v6M9 11h6"/></svg><h3>Healthcare</h3><p>Hospitals, insurers, biotech and medical device companies. HIPAA-fluent, life-critical.</p><span class="go">Explore <span>→</span></span></a>
-      <a class="tile" href="industries/financial-services.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M3 9l9-6 9 6M8 20v-5M16 20v-5"/></svg><h3>Financial Services</h3><p>Banks, payments, insurers, hedge funds and FinTech — tools that move billions safely.</p><span class="go">Explore <span>→</span></span></a>
-      <a class="tile" href="industries/blue-collar-environments.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20v-6a8 8 0 0 1 16 0v6M8 20v-6M16 20v-6M9 8V5h6v3"/></svg><h3>Blue Collar Environments</h3><p>Mobile-first, multilingual software for people who rarely sit at a desk.</p><span class="go">Explore <span>→</span></span></a>
-      <a class="tile" href="industries/government-non-profit.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/></svg><h3>Government &amp; Non-Profits</h3><p>Local, state, tribal and national entities modernizing tools that serve people.</p><span class="go">Explore <span>→</span></span></a>
+    <div class="ind-cards">
+
+      <a class="ind-card" href="industries/high-tech.html">
+        <div class="ind-card-bg" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=70')"></div>
+        <div class="ind-card-in"><span class="ind-card-num">01</span><h2><span class="o">High</span> Tech</h2><p>Product companies, SaaS platforms and scale-ups that need serious engineering firepower.</p><span class="go">Explore <span>→</span></span></div>
+      </a>
+
+      <a class="ind-card" href="industries/gaming-entertainment-hospitality.html">
+        <div class="ind-card-bg" style="background-image:url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=1200&q=70')"></div>
+        <div class="ind-card-in"><span class="ind-card-num">02</span><h2><span class="o">Gaming</span>, Entertainment &amp; <span class="o">Hospitality</span></h2><p>Casinos, resorts, lotteries, iGaming and game studios — our founding vertical.</p><span class="go">Explore <span>→</span></span></div>
+      </a>
+
+      <a class="ind-card" href="industries/healthcare.html">
+        <div class="ind-card-bg" style="background-image:url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=70')"></div>
+        <div class="ind-card-in"><span class="ind-card-num">03</span><h2><span class="o">Health</span>care</h2><p>Hospitals, insurers, biotech and medical device companies. HIPAA-fluent, life-critical.</p><span class="go">Explore <span>→</span></span></div>
+      </a>
+
+      <a class="ind-card" href="industries/financial-services.html">
+        <div class="ind-card-bg" style="background-image:url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=70')"></div>
+        <div class="ind-card-in"><span class="ind-card-num">04</span><h2><span class="o">Financial</span> Services</h2><p>Banks, payments, insurers, hedge funds and FinTech — tools that move billions safely.</p><span class="go">Explore <span>→</span></span></div>
+      </a>
+
+      <a class="ind-card" href="industries/blue-collar-environments.html">
+        <div class="ind-card-bg" style="background-image:url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1200&q=70')"></div>
+        <div class="ind-card-in"><span class="ind-card-num">05</span><h2><span class="o">Blue Collar</span> Environments</h2><p>Mobile-first, multilingual software for people who rarely sit at a desk.</p><span class="go">Explore <span>→</span></span></div>
+      </a>
+
+      <a class="ind-card" href="industries/government-non-profit.html">
+        <div class="ind-card-bg" style="background-image:url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1200&q=70')"></div>
+        <div class="ind-card-in"><span class="ind-card-num">06</span><h2><span class="o">Government</span> &amp; Non-Profits</h2><p>Local, state, tribal and national entities modernizing tools that serve people.</p><span class="go">Explore <span>→</span></span></div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -75,7 +127,7 @@
 <footer class="site"><div class="wrap">
   <div class="foot-top">
     <div class="foot-col">
-      <a class="brand" href="index.html" style="margin-bottom:16px"><span class="mark"><b>A</b></span><span>Plan A<small>TECHNOLOGIES</small></span></a>
+      <a class="brand" href="index.html" style="margin-bottom:16px"><img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies"></a>
       <p class="lede">Get a free (yes, free!) tech consultation when you reach out. We're easy to work with, we know what we're doing, and we make our customers look pretty awesome.</p>
     </div>
     <div class="foot-col"><h5>Company</h5><a href="about.html">About Us</a><a href="work.html">Our Work</a><a href="careers.html">Careers</a><a href="news.html">News</a></div>
@@ -88,6 +140,6 @@
   </div>
 </div></footer>
 
-<script src="assets/plana.js?v=3"></script>
+<script src="assets/plana.js?v=11"></script>
 </body>
 </html>

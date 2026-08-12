@@ -12,9 +12,56 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/plana.css?v=3">
+<link rel="stylesheet" href="assets/plana.css?v=11">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  /* Leadership photo grid */
+  .lead-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.3vw,20px)}
+  .lead-card{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line);
+    background:var(--navy-2);cursor:pointer;text-align:left;padding:0;color:inherit;font:inherit;display:block;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s}
+  .lead-card:hover{transform:translateY(-6px);border-color:rgba(255,90,22,.55)}
+  .lead-photo{aspect-ratio:1/1;background-size:cover;background-position:center top;
+    filter:grayscale(1) contrast(1.02);transform:scale(1.02);transition:filter .5s,transform .6s}
+  .lead-card:hover .lead-photo{filter:grayscale(0);transform:scale(1.06)}
+  .lead-meta{padding:15px 18px 18px}
+  .lead-meta .role{display:block;font-family:"Space Grotesk";font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:7px}
+  .lead-meta h3{font-family:"Space Grotesk";font-weight:700;font-size:clamp(16px,1.25vw,21px);line-height:1.05}
+  .lead-card.feat{grid-column:span 2}
+  .lead-card.feat .lead-photo{aspect-ratio:16/10;background-position:center 20%}
+  .lead-card .plus{position:absolute;top:13px;right:13px;z-index:3;width:34px;height:34px;border-radius:50%;
+    background:rgba(5,7,15,.5);border:1px solid var(--line);color:var(--paper);display:flex;align-items:center;
+    justify-content:center;font-size:18px;line-height:1;backdrop-filter:blur(6px);transition:background .3s,color .3s}
+  .lead-card:hover .plus{background:var(--orange);color:#000;border-color:var(--orange)}
+  @media(max-width:900px){.lead-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.lead-grid{grid-template-columns:1fr}.lead-card.feat{grid-column:span 1}.lead-card.feat .lead-photo{aspect-ratio:1/1}}
+
+  /* Bio modal */
+  .bio-modal{position:fixed;inset:0;z-index:300;background:rgba(5,7,15,.82);backdrop-filter:blur(8px);
+    display:none;align-items:center;justify-content:center;padding:clamp(16px,4vw,60px)}
+  .bio-modal.open{display:flex}
+  .bio-card{position:relative;background:var(--navy-2);border:1px solid var(--line);border-radius:20px;
+    max-width:940px;width:100%;display:grid;grid-template-columns:300px 1fr;overflow:hidden;max-height:88vh}
+  .bio-card .bio-photo{background-size:cover;background-position:center top;min-height:360px}
+  .bio-card .bio-body{padding:clamp(26px,3vw,46px);overflow-y:auto}
+  .bio-card .role{font-family:"Space Grotesk";font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange)}
+  .bio-card h2{font-family:"Space Grotesk";font-weight:700;font-size:clamp(28px,3.4vw,46px);line-height:1;margin:10px 0 22px}
+  .bio-card p{color:var(--paper-dim);font-size:14.5px;line-height:1.66;margin-bottom:12px}
+  .bio-close{position:absolute;top:16px;right:18px;width:46px;height:46px;border-radius:50%;
+    background:rgba(244,241,234,.08);border:1px solid var(--line);color:var(--paper);font-size:18px;cursor:pointer;z-index:320;
+    transition:background .3s,color .3s,border-color .3s}
+  .bio-close:hover{background:var(--orange);color:#000;border-color:var(--orange)}
+  @media(max-width:720px){.bio-card{grid-template-columns:1fr;max-height:92vh}.bio-card .bio-photo{min-height:0;aspect-ratio:3/2}}
+  body.bio-locked{overflow:hidden}
+  .bio-src{display:none}
+</style>
+  <meta property="og:url" content="https://planatechnologies.com/about-us">
+  <meta property="og:image" content="https://planatechnologies.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Us — Plan A Technologies">
+  <meta name="twitter:description" content="An award-winning engineering and AI partner, built by software entrepreneurs for organizations that need serious technical talent.">
+  <meta name="twitter:image" content="https://planatechnologies.com/og-image.png">
 </head>
 <body>
 
@@ -22,8 +69,7 @@
 <!-- NAV -->
 <nav class="site"><div class="wrap nav-in">
   <a class="brand" href="index.html">
-    <span class="mark"><b>A</b></span>
-    <span>Plan A<small>TECHNOLOGIES</small></span>
+    <img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies">
   </a>
   <button class="nav-toggle" aria-label="Menu">☰</button>
   <div class="nav-links">
@@ -39,10 +85,20 @@
 
 <!-- PAGE HERO -->
 <header class="pagehero">
+  <div class="pagehero-bg" style="background-image:url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1600&q=70')"></div>
+  <div class="shape ring" style="width:360px;height:360px;top:-120px;right:-90px"></div>
+  <div class="shape ring2" style="width:520px;height:520px;bottom:-280px;right:6%"></div>
   <div class="wrap">
     <div class="call">An award-winning tech company built for organizations that need serious technical talent.</div>
-    <h1>Who We <span class="o">Are</span></h1>
+    <h1 class="sr-only">About Plan A Technologies — an award-winning software engineering, AI and design company.</h1>
+    <div class="ph-title">Who We <span class="o">Are</span></div>
     <p class="lead">Plan A Technologies is an award-winning tech company built for organizations that need serious technical talent, creative problem-solving, and a team that actually delivers.</p>
+    <div class="hero-metrics">
+      <div class="hm"><b><span class="num" data-to="20"><span class="v">0</span></span>+</b><span>Years building software</span></div>
+      <div class="hm"><b><span class="num" data-to="500"><span class="v">0</span></span>+</b><span>Products deployed</span></div>
+      <div class="hm"><b><span class="num" data-to="200"><span class="v">0</span></span>+</b><span>Clients worldwide</span></div>
+      <div class="hm"><b><span class="v" data-to="0.4">0.4</span>%</b><span>Of applicants we hire</span></div>
+    </div>
   </div>
 </header>
 
@@ -89,31 +145,26 @@
 <section class="rows reveal" id="unique" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head"><h2>5 things that make us unique</h2><div class="idx">(Why we're different)</div></div>
-    <div class="cardgrid">
-      <div class="tile">
-        <div class="kicker dim" style="margin-bottom:16px">01</div>
-        <h3>Our people genuinely know what they're doing.</h3>
-        <p>We are far more selective than our competitors (we hire only a fraction of a percent of our applicants), so we get the work done correctly the first time. We also deeply understand the industries where we work. Our team helps with both the tech challenges and the business challenges you need to overcome.</p>
+    <div class="slabs">
+      <div class="slab">
+        <span class="bignum">01</span>
+        <div class="body"><h3>Our people genuinely know what they're doing.</h3><p>We are far more selective than our competitors (we hire only a fraction of a percent of our applicants), so we get the work done correctly the first time. We also deeply understand the industries where we work — helping with both the tech challenges and the business challenges you need to overcome.</p></div>
       </div>
-      <div class="tile">
-        <div class="kicker dim" style="margin-bottom:16px">02</div>
-        <h3>We're available 24/7/365.</h3>
-        <p>Across every time zone, we're there when you need us.</p>
+      <div class="slab">
+        <span class="bignum">02</span>
+        <div class="body"><h3>We're available 24/7/365.</h3><p>Across every time zone, we're there when you need us.</p></div>
       </div>
-      <div class="tile">
-        <div class="kicker dim" style="margin-bottom:16px">03</div>
-        <h3>We actually care.</h3>
-        <p>Our back-end and front-end software engineers, technology researchers, UI/UX experts, business analysts, DevOps engineers, QA engineers, software architects, former CIOs and CTOs, and PMs are selected for their kindness, drive and desire to do the right thing as much as their technical skill.</p>
+      <div class="slab">
+        <span class="bignum">03</span>
+        <div class="body"><h3>We actually care.</h3><p>Our back-end and front-end software engineers, technology researchers, UI/UX experts, business analysts, DevOps engineers, QA engineers, software architects, former CIOs and CTOs, and PMs are selected for their kindness, drive and desire to do the right thing as much as their technical skill.</p></div>
       </div>
-      <div class="tile">
-        <div class="kicker dim" style="margin-bottom:16px">04</div>
-        <h3>We're flexible.</h3>
-        <p>We can do project-based work, retainer work, hourly rate work, staff augmentation, or tech consulting. We can give you a one-person team, or a 100-person team.</p>
+      <div class="slab">
+        <span class="bignum">04</span>
+        <div class="body"><h3>We're flexible.</h3><p>We can do project-based work, retainer work, hourly rate work, staff augmentation, or tech consulting. We can give you a one-person team, or a 100-person team.</p></div>
       </div>
-      <div class="tile">
-        <div class="kicker dim" style="margin-bottom:16px">05</div>
-        <h3>Our track record.</h3>
-        <p>We prioritize the health and success of our long-term relationships above all else with our clients. This idea of fostering long-term relationships means we do everything possible to make it easy to work with us. We treat you the way we would want to be treated if our roles were reversed.</p>
+      <div class="slab">
+        <span class="bignum">05</span>
+        <div class="body"><h3>Our track record.</h3><p>We prioritize the health and success of our long-term relationships above all else. That means we do everything possible to make it easy to work with us — and treat you the way we'd want to be treated if our roles were reversed.</p></div>
       </div>
     </div>
   </div>
@@ -122,100 +173,114 @@
 <!-- LEADERSHIP -->
 <section class="rows reveal" id="leadership" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2>Leadership team</h2><div class="idx">(13 profiles)</div></div>
-    <div class="cardgrid">
+    <div class="sec-head"><h2>Leadership team</h2><div class="idx">(13 profiles · tap any to read)</div></div>
+    <div class="lead-grid">
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Chairman of the Board</div>
-        <h3>Aron Ezra</h3>
-        <p>Aron Ezra is an innovator and entrepreneur. He has served as CEO of multiple software companies, all of which he grew over 20x and were acquired in multimillion-dollar exits.</p>
-        <p>His previous company, OfferCraft, won the Platinum Award from the G&amp;L Roundtable for best new technology; was named Startup of the Year by the Best in Biz Awards; was named one of the Top 20 Most Innovative Technologies; and was profiled in over 200 news stories published in places like The New York Times, Forbes, Quartz, and Business Insider. It was acquired by NRT, a Canadian FinTech company that processes over $20 billion annually.</p>
-        <p>Earlier, as CEO of MacroView Labs, a mobile software startup used by hospitality, healthcare and retail customers, Aron grew the startup into a powerhouse with tens of millions of users, and dozens of industry awards. It was acquired by Bally Technologies (now part of Light &amp; Wonder). He has been invited to give more than 1,000 presentations at industry conferences and has a bachelor's degree with honors from Princeton.</p>
-      </div>
+      <button class="lead-card feat" data-bio="aron" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Aron-Ezra-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Aron-Ezra-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">Chairman of the Board</span><h3>Aron Ezra</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Chief Executive Officer</div>
-        <h3>Slav Kulik</h3>
-        <p>Over the last 20 years, Slav Kulik has led dozens of software development teams serving both startups and Fortune 500 companies, and has won many awards for his work. He is a passionate leader who loves technology, his customers, and his teams. Early in his career, Slav was an engineer for several large international eCommerce and customer support companies, where he helped design and implement things like fraud prevention tools, data warehousing, and platforms that continue to process millions of dollars of daily transactions. He repeatedly designed fast, reliable, massively scalable architectures that earned him increasingly senior engineering roles, including serving as SVP of Engineering at multibillion-dollar companies.</p>
-        <p>Eventually, Slav co-founded a few startups, including OfferCraft and MacroView Labs, where he was Chief Technology Officer and Chief Software Architect — each of these software companies were acquired in 8-figure deals. During this time, Slav gained deep, hands-on experience building up and running diverse teams of engineers around the world. Slav launched Plan A with many of the developers and creatives who have worked alongside him for years. He still enjoys personally jumping in to write code any chance he has.</p>
-      </div>
+      <button class="lead-card feat" data-bio="slav" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/11/135-3cS0Ir_lzH01.jpeg">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/11/135-3cS0Ir_lzH01.jpeg')"></div>
+        <div class="lead-meta"><span class="role">Chief Executive Officer</span><h3>Slav Kulik</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Chief Delivery Officer</div>
-        <h3>Eva Skornicka</h3>
-        <p>Iwona 'Eva' Skornicka is our Chief Delivery Officer. With a 20+ year background in operations, product development, and business strategy, she has an impressive track record of managing diverse teams and achieving stellar results. Eva has led software development initiatives across many industries, including financial services, high tech, gaming and more. Prior to joining Plan A, Eva worked as a senior executive at several different organizations: she ran a major credit underwriting technology company; she led the design and implementation of digital wallets for a US FinTech company; and she managed financial transactions at a large California casino.</p>
-      </div>
+      <button class="lead-card" data-bio="eva" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Eva-Skornicka-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Eva-Skornicka-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">Chief Delivery Officer</span><h3>Eva Skornicka</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Chief Digital Officer</div>
-        <h3>John Boesen</h3>
-        <p>John oversees complex digital transformation initiatives for many of our clients, and manages both our architecture team and our regional team in Australia and New Zealand.</p>
-        <p>With a passion for leading technology strategy and solution delivery, John has supported organizations ranging from startups to billion-dollar companies. He has previously served as CTO, CIO, and COO, across multiple companies over his 30-year career in technology. He has directed software and hardware engineering, data and business intelligence, product development, delivery, risk management, as well as private and public cloud infrastructure and information security functions.</p>
-      </div>
+      <button class="lead-card" data-bio="john" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/10/John-Boesen-headshot.jpeg">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/10/John-Boesen-headshot.jpeg')"></div>
+        <div class="lead-meta"><span class="role">Chief Digital Officer</span><h3>John Boesen</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">VP of Solutions</div>
-        <h3>Dmytro Shapar</h3>
-        <p>Dmytro Shapar leads our Solution Architecture Center of Excellence, and focuses on architecting technical solutions for our customers that are elegant and easy-to-manage. His expertise across multiple programming languages and approaches allows him to solve even the most complex challenges. Prior to joining Plan A, he tackled over 100 different development projects for clients spanning multiple industries across the United States and Europe. He has been a developer, a chief software architect, and a CTO, and has worked for some of the largest private and public software development shops in the world.</p>
-      </div>
+      <button class="lead-card" data-bio="dmytro" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Dmitry-Shapar-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Dmitry-Shapar-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">VP of Solutions</span><h3>Dmytro Shapar</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">VP of Project Management</div>
-        <h3>Vitaliy Polyanskiy</h3>
-        <p>Vitaliy Polyanskiy is Vice President of Project Management at Plan A Technologies, where he runs the project delivery side of our business. All project managers across the company report to him, and he is ultimately responsible for overseeing the on-time, on-budget delivery of our award-winning custom software solutions for our clients around the world. Vitaliy is a gifted communicator, planner and project leader, and loves mentoring our other project managers to ensure that Plan A consistently earns outstanding feedback from our clients.</p>
-      </div>
+      <button class="lead-card" data-bio="vitaliy" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Vitaliy-Polyanskiy-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Vitaliy-Polyanskiy-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">VP of Project Management</span><h3>Vitaliy Polyanskiy</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">VP of Product Management</div>
-        <h3>Pierre Darbouze</h3>
-        <p>Pierre Darbouze helps our clients to create their product vision and to, then, execute and bring that vision to life. Whether it's a brand new idea to be scoped, an improvement to an existing product line, or a modernization project that needs to get across the finish line, Pierre gets software launched.</p>
-        <p>Pierre is a calm, thoughtful leader with a strong technical background working at both startups and Fortune 500 companies alike. After many years working in Silicon Valley for Cisco, he has spent the last decade managing increasingly complex products mostly in heavily regulated industries. He graduated from Carnegie Mellon University with a degree in computer science.</p>
-      </div>
+      <button class="lead-card" data-bio="pierre" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Pierre-Darbouze-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Pierre-Darbouze-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">VP of Product Management</span><h3>Pierre Darbouze</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">VP of Global Talent</div>
-        <h3>Ingrid Cordeiro</h3>
-        <p>Ingrid Cordeiro manages our entire HR team including our HR managers, and recruiters, and leads company-wide efforts to find, engage, and inspire the best engineering and creative talent in the world. She started her career in HR and search more than twenty years ago as an intern, and quickly realized that she loved helping her employers find just the right talent for all kinds of different roles. She worked in several Brazilian businesses, had the opportunity to work in both Chilean and Chinese multinational corporations, and ran her own successful talent consultancy for more than a decade.</p>
-      </div>
+      <button class="lead-card" data-bio="ingrid" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Ingrid-Cordeiro-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Ingrid-Cordeiro-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">VP of Global Talent</span><h3>Ingrid Cordeiro</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">VP of Creative</div>
-        <h3>Christian Salmon</h3>
-        <p>Christian leads Plan A's creative work across the globe. He oversees our artists, UX designers, animators, and our growing game development studio. Over the last two decades, he has held design leadership roles at both startups and at multibillion-dollar international entertainment and gaming companies.</p>
-        <p>Christian brings a blend of design and business expertise to the company — he has studied innovation, business operations, production, animation, and fine art. He has led teams across Australia, India, Eastern Europe, South America, and the US.</p>
-      </div>
+      <button class="lead-card" data-bio="christian" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Christian-Salmon-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Christian-Salmon-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">VP of Creative</span><h3>Christian Salmon</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Senior Director of Regional Management</div>
-        <h3>Facundo Saravia</h3>
-        <p>Facundo oversees our Regional Directors at Plan A Technologies, helping to ensure our teams are efficient, effective, and have a lot of fun together.</p>
-        <p>An accomplished Senior DevOps engineer, SRE and Cloud Architect with over 15 years of experience, Facundo holds a Systems Degree from CAECE University in Buenos Aires. Before taking on his current leadership role at Plan A, he managed large-scale infrastructure and systems for massive global enterprises, including IBM, American Express, and Phillip Morris. Since joining Plan A, he has driven major technical initiatives, including successfully slashing cloud infrastructure costs by up to 30%.</p>
-      </div>
+      <button class="lead-card" data-bio="facundo" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2026/04/Profile.webp">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2026/04/Profile.webp')"></div>
+        <div class="lead-meta"><span class="role">Sr. Director, Regional Management</span><h3>Facundo Saravia</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Regional Director, Ukrainian &amp; Russian-speaking countries</div>
-        <h3>Vladimir Chernyshov</h3>
-        <p>Vladimir Chernyshov supervises our teams spanning the Ukrainian and Russian-speaking world.</p>
-        <p>With both bachelors and masters degrees from universities in Ukraine, Vladimir is a seasoned technology leader who has spent over 20 years as a software engineer, systems administrator, and architect. He also co-leads our DevOps practice and tackles particularly complex DevOps challenges for our clients. Having spent 7 years as a professor, he enjoys teaching and brings that spirit of learning and self-improvement to his work.</p>
-      </div>
+      <button class="lead-card" data-bio="vladimir" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Vladimir-Chernyshov-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Vladimir-Chernyshov-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">Regional Director · CEE</span><h3>Vladimir Chernyshov</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Regional Director, Turkey &amp; India</div>
-        <h3>Ali Azizoğlu</h3>
-        <p>Ali Azizoğlu oversees our teams in Turkey and India. Ali is a seasoned senior leader who loves working with clients to produce high-quality software, and loves mentoring other team members.</p>
-        <p>Ali has deep development experiences across industries like tourism, insurance, banking, gaming, civil defense, and more. As a fullstack developer, he codes in multiple languages including .NET, C, C++, Node, Angular, React, and more. When he's not in front of the computer, he can usually be found with a book in his hands.</p>
-      </div>
+      <button class="lead-card" data-bio="ali" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Ali-Azizoglu-Mobile-1.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Ali-Azizoglu-Mobile-1.png')"></div>
+        <div class="lead-meta"><span class="role">Regional Director · Turkey &amp; India</span><h3>Ali Azizoğlu</h3></div>
+      </button>
 
-      <div class="tile">
-        <div class="kicker" style="margin-bottom:14px">Regional Director, Africa</div>
-        <h3>Bamiyo Emina</h3>
-        <p>Bamiyo Emina serves as Regional Director for Africa and a senior QA engineer at the company. With a wealth of experience that spans both innovative startups and large organizations, Bamiyo has been a steadfast advocate for the critical role of software test automation in delivering high-quality products.</p>
-        <p>Over the years he refined his skills in mobile and web test automation, and today he leads multiple high-performing software testing teams. His commitment to nurturing emerging talent is evident in his efforts to guide individuals seeking to transition into technology roles. He is a graduate of the University of Benin.</p>
-      </div>
+      <button class="lead-card" data-bio="bamiyo" data-photo="https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Bamiyo-Emina-Mobile.png">
+        <span class="plus">+</span>
+        <div class="lead-photo" style="background-image:url('https://plana-website-prod-wp.azurewebsites.net/wp-content/uploads/2024/08/Bamiyo-Emina-Mobile.png')"></div>
+        <div class="lead-meta"><span class="role">Regional Director · Africa</span><h3>Bamiyo Emina</h3></div>
+      </button>
 
     </div>
   </div>
+
+  <!-- Crawlable bio sources (shown in modal on click) -->
+  <div class="bio-src" id="bio-aron"><span class="role">Chairman of the Board</span><h2>Aron Ezra</h2><p>Aron Ezra is an innovator and entrepreneur. He has served as CEO of multiple software companies, all of which he grew over 20x and were acquired in multimillion-dollar exits.</p><p>His previous company, OfferCraft, won the Platinum Award from the G&amp;L Roundtable for best new technology; was named Startup of the Year by the Best in Biz Awards; was named one of the Top 20 Most Innovative Technologies; and was profiled in over 200 news stories published in places like The New York Times, Forbes, Quartz, and Business Insider. It was acquired by NRT, a Canadian FinTech company that processes over $20 billion annually.</p><p>Earlier, as CEO of MacroView Labs, a mobile software startup used by hospitality, healthcare and retail customers, Aron grew the startup into a powerhouse with tens of millions of users, and dozens of industry awards. It was acquired by Bally Technologies (now part of Light &amp; Wonder). He has been invited to give more than 1,000 presentations at industry conferences and has a bachelor's degree with honors from Princeton.</p></div>
+  <div class="bio-src" id="bio-slav"><span class="role">Chief Executive Officer</span><h2>Slav Kulik</h2><p>Over the last 20 years, Slav Kulik has led dozens of software development teams serving both startups and Fortune 500 companies, and has won many awards for his work. He is a passionate leader who loves technology, his customers, and his teams. Early in his career, Slav was an engineer for several large international eCommerce and customer support companies, where he helped design and implement things like fraud prevention tools, data warehousing, and platforms that continue to process millions of dollars of daily transactions. He repeatedly designed fast, reliable, massively scalable architectures that earned him increasingly senior engineering roles, including serving as SVP of Engineering at multibillion-dollar companies.</p><p>Eventually, Slav co-founded a few startups, including OfferCraft and MacroView Labs, where he was Chief Technology Officer and Chief Software Architect — each of these software companies were acquired in 8-figure deals. During this time, Slav gained deep, hands-on experience building up and running diverse teams of engineers around the world. Slav launched Plan A with many of the developers and creatives who have worked alongside him for years. He still enjoys personally jumping in to write code any chance he has.</p></div>
+  <div class="bio-src" id="bio-eva"><span class="role">Chief Delivery Officer</span><h2>Eva Skornicka</h2><p>Iwona 'Eva' Skornicka is our Chief Delivery Officer. With a 20+ year background in operations, product development, and business strategy, she has an impressive track record of managing diverse teams and achieving stellar results. Eva has led software development initiatives across many industries, including financial services, high tech, gaming and more. Prior to joining Plan A, Eva worked as a senior executive at several different organizations: she ran a major credit underwriting technology company; she led the design and implementation of digital wallets for a US FinTech company; and she managed financial transactions at a large California casino.</p></div>
+  <div class="bio-src" id="bio-john"><span class="role">Chief Digital Officer</span><h2>John Boesen</h2><p>John oversees complex digital transformation initiatives for many of our clients, and manages both our architecture team and our regional team in Australia and New Zealand.</p><p>With a passion for leading technology strategy and solution delivery, John has supported organizations ranging from startups to billion-dollar companies. He has previously served as CTO, CIO, and COO, across multiple companies over his 30-year career in technology. He has directed software and hardware engineering, data and business intelligence, product development, delivery, risk management, as well as private and public cloud infrastructure and information security functions.</p></div>
+  <div class="bio-src" id="bio-dmytro"><span class="role">VP of Solutions</span><h2>Dmytro Shapar</h2><p>Dmytro Shapar leads our Solution Architecture Center of Excellence, and focuses on architecting technical solutions for our customers that are elegant and easy-to-manage. His expertise across multiple programming languages and approaches allows him to solve even the most complex challenges. Prior to joining Plan A, he tackled over 100 different development projects for clients spanning multiple industries across the United States and Europe. He has been a developer, a chief software architect, and a CTO, and has worked for some of the largest private and public software development shops in the world.</p></div>
+  <div class="bio-src" id="bio-vitaliy"><span class="role">VP of Project Management</span><h2>Vitaliy Polyanskiy</h2><p>Vitaliy Polyanskiy is Vice President of Project Management at Plan A Technologies, where he runs the project delivery side of our business. All project managers across the company report to him, and he is ultimately responsible for overseeing the on-time, on-budget delivery of our award-winning custom software solutions for our clients around the world. Vitaliy is a gifted communicator, planner and project leader, and loves mentoring our other project managers to ensure that Plan A consistently earns outstanding feedback from our clients.</p></div>
+  <div class="bio-src" id="bio-pierre"><span class="role">VP of Product Management</span><h2>Pierre Darbouze</h2><p>Pierre Darbouze helps our clients to create their product vision and to, then, execute and bring that vision to life. Whether it's a brand new idea to be scoped, an improvement to an existing product line, or a modernization project that needs to get across the finish line, Pierre gets software launched.</p><p>Pierre is a calm, thoughtful leader with a strong technical background working at both startups and Fortune 500 companies alike. After many years working in Silicon Valley for Cisco, he has spent the last decade managing increasingly complex products mostly in heavily regulated industries. He graduated from Carnegie Mellon University with a degree in computer science.</p></div>
+  <div class="bio-src" id="bio-ingrid"><span class="role">VP of Global Talent</span><h2>Ingrid Cordeiro</h2><p>Ingrid Cordeiro manages our entire HR team including our HR managers, and recruiters, and leads company-wide efforts to find, engage, and inspire the best engineering and creative talent in the world. She started her career in HR and search more than twenty years ago as an intern, and quickly realized that she loved helping her employers find just the right talent for all kinds of different roles. She worked in several Brazilian businesses, had the opportunity to work in both Chilean and Chinese multinational corporations, and ran her own successful talent consultancy for more than a decade.</p></div>
+  <div class="bio-src" id="bio-christian"><span class="role">VP of Creative</span><h2>Christian Salmon</h2><p>Christian leads Plan A's creative work across the globe. He oversees our artists, UX designers, animators, and our growing game development studio. Over the last two decades, he has held design leadership roles at both startups and at multibillion-dollar international entertainment and gaming companies.</p><p>Christian brings a blend of design and business expertise to the company — he has studied innovation, business operations, production, animation, and fine art. He has led teams across Australia, India, Eastern Europe, South America, and the US.</p></div>
+  <div class="bio-src" id="bio-facundo"><span class="role">Senior Director of Regional Management</span><h2>Facundo Saravia</h2><p>Facundo oversees our Regional Directors at Plan A Technologies, helping to ensure our teams are efficient, effective, and have a lot of fun together.</p><p>An accomplished Senior DevOps engineer, SRE and Cloud Architect with over 15 years of experience, Facundo holds a Systems Degree from CAECE University in Buenos Aires. Before taking on his current leadership role at Plan A, he managed large-scale infrastructure and systems for massive global enterprises, including IBM, American Express, and Phillip Morris. Since joining Plan A, he has driven major technical initiatives, including successfully slashing cloud infrastructure costs by up to 30%.</p></div>
+  <div class="bio-src" id="bio-vladimir"><span class="role">Regional Director, Ukrainian &amp; Russian-speaking countries</span><h2>Vladimir Chernyshov</h2><p>Vladimir Chernyshov supervises our teams spanning the Ukrainian and Russian-speaking world.</p><p>With both bachelors and masters degrees from universities in Ukraine, Vladimir is a seasoned technology leader who has spent over 20 years as a software engineer, systems administrator, and architect. He also co-leads our DevOps practice and tackles particularly complex DevOps challenges for our clients. Having spent 7 years as a professor, he enjoys teaching and brings that spirit of learning and self-improvement to his work.</p></div>
+  <div class="bio-src" id="bio-ali"><span class="role">Regional Director, Turkey &amp; India</span><h2>Ali Azizoğlu</h2><p>Ali Azizoğlu oversees our teams in Turkey and India. Ali is a seasoned senior leader who loves working with clients to produce high-quality software, and loves mentoring other team members.</p><p>Ali has deep development experiences across industries like tourism, insurance, banking, gaming, civil defense, and more. As a fullstack developer, he codes in multiple languages including .NET, C, C++, Node, Angular, React, and more. When he's not in front of the computer, he can usually be found with a book in his hands.</p></div>
+  <div class="bio-src" id="bio-bamiyo"><span class="role">Regional Director, Africa</span><h2>Bamiyo Emina</h2><p>Bamiyo Emina serves as Regional Director for Africa and a senior QA engineer at the company. With a wealth of experience that spans both innovative startups and large organizations, Bamiyo has been a steadfast advocate for the critical role of software test automation in delivering high-quality products.</p><p>Over the years he refined his skills in mobile and web test automation, and today he leads multiple high-performing software testing teams. His commitment to nurturing emerging talent is evident in his efforts to guide individuals seeking to transition into technology roles. He is a graduate of the University of Benin.</p></div>
 </section>
+
+<!-- BIO MODAL -->
+<div class="bio-modal" id="bioModal" role="dialog" aria-modal="true" aria-label="Leadership bio">
+  <button class="bio-close" id="bioClose" aria-label="Close">✕</button>
+  <div class="bio-card">
+    <div class="bio-photo" id="bioPhoto"></div>
+    <div class="bio-body" id="bioBody"></div>
+  </div>
+</div>
 
 <!-- CTA -->
 <section class="cta" id="cta">
@@ -231,7 +296,7 @@
 <footer class="site"><div class="wrap">
   <div class="foot-top">
     <div class="foot-col">
-      <a class="brand" href="index.html" style="margin-bottom:16px"><span class="mark"><b>A</b></span><span>Plan A<small>TECHNOLOGIES</small></span></a>
+      <a class="brand" href="index.html" style="margin-bottom:16px"><img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies"></a>
       <p class="lede">Get a free (yes, free!) tech consultation when you reach out. We're easy to work with, we know what we're doing, and we make our customers look pretty awesome.</p>
     </div>
     <div class="foot-col"><h5>Company</h5><a href="about.html">About Us</a><a href="work.html">Our Work</a><a href="careers.html">Careers</a><a href="news.html">News</a></div>
@@ -244,6 +309,32 @@
   </div>
 </div></footer>
 
-<script src="assets/plana.js?v=3"></script>
+<script src="assets/plana.js?v=11"></script>
+<script>
+/* Leadership bio modal */
+(function(){
+  var modal=document.getElementById("bioModal"),
+      photo=document.getElementById("bioPhoto"),
+      body=document.getElementById("bioBody"),
+      closeBtn=document.getElementById("bioClose"),
+      reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!modal) return;
+  function open(id,ph){
+    var src=document.getElementById("bio-"+id); if(!src) return;
+    body.innerHTML=src.innerHTML;
+    photo.style.backgroundImage="url('"+ph+"')";
+    modal.classList.add("open"); document.body.classList.add("bio-locked");
+    body.scrollTop=0;
+    if(window.gsap && !reduce) gsap.fromTo(modal.querySelector(".bio-card"),{y:26,opacity:0},{y:0,opacity:1,duration:.45,ease:"power3.out"});
+  }
+  function close(){ modal.classList.remove("open"); document.body.classList.remove("bio-locked"); }
+  document.querySelectorAll(".lead-card").forEach(function(c){
+    c.addEventListener("click",function(){ open(c.getAttribute("data-bio"), c.getAttribute("data-photo")); });
+  });
+  closeBtn.addEventListener("click",close);
+  modal.addEventListener("click",function(e){ if(e.target===modal) close(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape") close(); });
+}());
+</script>
 </body>
 </html>

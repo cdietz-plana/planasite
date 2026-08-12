@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plan A UX Studio — UX/UI Design That Ships | Plan A Technologies</title>
 <meta name="description" content="Plan A UX Studio is the UX/UI design team inside Plan A Technologies: we design digital products and our engineers ship them. Product &amp; UX, UI, design systems, research and motion for the world's biggest brands. Global, 24/7/365.">
-<link rel="canonical" href="https://www.planatechnologies.com/ux-studio">
+<link rel="canonical" href="https://planatechnologies.com/ux-studio">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#0A0F1E">
 <meta name="author" content="Plan A Technologies">
@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="Plan A Technologies">
 <meta property="og:title" content="Plan A UX Studio — UX/UI Design That Ships">
 <meta property="og:description" content="We design digital products and our engineers ship them. Product &amp; UX, UI, design systems, research and motion — global, 24/7/365.">
-<meta property="og:url" content="https://www.planatechnologies.com/ux-studio">
-<meta property="og:image" content="https://www.planatechnologies.com/og/ux-studio.png">
+<meta property="og:url" content="https://planatechnologies.com/ux-studio">
+<meta property="og:image" content="https://planatechnologies.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Plan A UX Studio — UX/UI Design That Ships">
 <meta name="twitter:description" content="We design digital products and our engineers ship them. Global, 24/7/365.">
-<meta name="twitter:image" content="https://www.planatechnologies.com/og/ux-studio.png">
+<meta name="twitter:image" content="https://planatechnologies.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -44,7 +44,7 @@
     overflow-x:hidden;
   }
   ::selection{background:var(--orange);color:#000}
-  h1,h2,h3,.disp{font-family:"Bebas Neue",sans-serif;text-transform:uppercase;font-weight:400;line-height:.9;letter-spacing:.005em}
+  h1,h2,h3,.disp{font-family:"Space Grotesk",sans-serif;text-transform:uppercase;font-weight:700;line-height:.9;letter-spacing:-.02em}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1400px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
 
@@ -59,14 +59,43 @@
   .curtain{position:fixed;inset:0;background:var(--navy);z-index:9990;display:flex;align-items:center;justify-content:center}
   .curtain-logo{width:clamp(240px,42vw,560px);height:auto;display:block;will-change:transform,opacity}
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;width:100%;z-index:100;padding:20px 0;mix-blend-mode:difference}
-  .nav-in{display:flex;justify-content:space-between;align-items:center}
-  .logo{display:block;height:38px;width:auto}
-  .nav-links{display:flex;gap:34px;font-family:"Bebas Neue",sans-serif;font-size:17px;letter-spacing:.06em;text-transform:uppercase}
-  .nav-links a{opacity:.85;transition:opacity .3s}
-  .nav-links a:hover{opacity:1}
-  @media(max-width:760px){.nav-links{display:none}}
+  /* NAV — matches the Plan A main site */
+  nav.site{position:fixed;top:0;left:0;width:100%;z-index:100;
+    transition:background .4s,backdrop-filter .4s,border-color .4s;
+    background:rgba(10,15,30,.25);backdrop-filter:blur(12px);border-bottom:1px solid transparent}
+  nav.site.scrolled{background:rgba(10,15,30,.25);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  .brand{display:flex;align-items:center}
+  .brand img{height:34px;width:auto;display:block}
+  .nav-links{display:flex;gap:30px;align-items:center;font-family:"Space Grotesk",sans-serif;
+    font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase}
+  .nav-links a{position:relative;opacity:.82;transition:opacity .3s;padding:4px 0}
+  .nav-links a:hover,.nav-links a.active{opacity:1}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--orange);transition:width .3s}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+  .nav-links a.btn-talk{border:1px solid var(--orange);color:var(--orange)!important;padding:13px 32px!important;border-radius:0;opacity:1!important;transition:background .3s,color .3s}
+  .btn-talk:hover{background:var(--orange);color:#000!important}
+  .btn-talk::after{display:none}
+  .nav-toggle{display:none;background:none;border:0;color:var(--paper);cursor:pointer;font-size:22px;line-height:1}
+  .nav-dd{position:relative;display:inline-block}
+  .nav-dd-toggle{background:none;border:0;color:inherit;font-family:"Space Grotesk",sans-serif;font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;opacity:.82;padding:4px 0;white-space:nowrap;line-height:1;transition:opacity .3s}
+  .nav-dd-toggle:hover{opacity:1}
+  .nav-dd .cr{display:inline-block;margin-left:6px;font-size:8px;vertical-align:middle}
+  .nav-dd:hover .cr{transform:rotate(180deg)}
+  .nav-dd-menu{position:absolute;top:100%;left:-14px;min-width:186px;background:rgba(10,15,30,.97);backdrop-filter:blur(14px);border:1px solid var(--line);padding:8px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .3s,transform .3s,visibility .3s;z-index:220}
+  .nav-dd:hover .nav-dd-menu{opacity:1;visibility:visible;transform:none}
+  .nav-dd-menu a{display:block;padding:11px 12px;font-size:13px;letter-spacing:.03em;opacity:.85;transition:background .3s,opacity .3s,color .3s}
+  .nav-dd-menu a:hover{opacity:1;background:rgba(255,90,22,.1);color:var(--orange)}
+  .nav-dd-menu a::after{display:none}
+  @media(max-width:900px){
+    .nav-links{position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;gap:26px;font-size:22px;transform:translateY(-100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:210}
+    .nav-links.open{transform:none}
+    .nav-toggle{display:block;z-index:220;position:relative}
+    .nav-dd{flex-direction:column;align-items:center;gap:8px}
+    .nav-dd-menu{position:static;opacity:1;visibility:visible;transform:none;background:none;border:0;backdrop-filter:none;padding:0;margin:0;display:none;text-align:center;min-width:0}
+    .nav-dd.open .nav-dd-menu{display:block}
+    .nav-dd-menu a{font-size:17px;opacity:.7;padding:8px}
+  }
 
   /* HERO */
   .hero{height:100vh;min-height:640px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:6vh;overflow:hidden}
@@ -76,7 +105,7 @@
   .hero .wrap{position:relative;z-index:2;width:100%}
   .hero-tag{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-dim);margin-bottom:26px}
   .hero-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 14px var(--orange)}
-  .hero h1{font-size:clamp(70px,15vw,250px);margin-bottom:26px}
+  .hero h1{font-size:clamp(53px,11.25vw,188px);margin-bottom:26px}
   .hero h1 .l{display:block;overflow:hidden}
   .hero h1 .l i{display:block;font-style:normal;transform:translateY(105%)}
   .hero-sub{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;border-top:1px solid var(--line);padding-top:22px}
@@ -90,7 +119,7 @@
   .marquee{background:var(--orange);color:#0A0F1E;padding:16px 0;overflow:hidden;white-space:nowrap;border-top:1px solid #000;border-bottom:1px solid #000}
   .marquee.dark{background:var(--ink);color:var(--paper)}
   .marquee .track{display:inline-block;will-change:transform}
-  .marquee .track span{font-family:"Bebas Neue",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(22px,2.8vw,36px);letter-spacing:.04em;padding:0 22px}
+  .marquee .track span{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(22px,2.8vw,36px);letter-spacing:.04em;padding:0 22px}
   .marquee .track span .ast{color:var(--paper);opacity:.5;margin-left:22px}
   .marquee.dark .track span .ast{color:var(--orange);opacity:1}
 
@@ -107,14 +136,14 @@
   .statement .wrap{display:grid;grid-template-columns:1fr;gap:40px;position:relative;z-index:2}
   .kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
   .kicker::before{content:"✳";font-size:14px}
-  .statement h2{font-size:clamp(34px,6vw,92px);max-width:18ch;letter-spacing:.01em}
+  .statement h2{font-size:clamp(34px,6vw,92px);max-width:18ch;letter-spacing:-.01em}
   .statement h2 .w{display:inline-block;overflow:hidden;vertical-align:top}
   .statement h2 .w i{display:inline-block;font-style:normal;transform:translateY(105%)}
   .statement h2 .o{color:var(--orange)}
 
   /* LOGOS */
   .logos{padding:70px 0 90px;border-top:1px solid var(--line)}
-  .logos .lead{font-size:clamp(24px,3.4vw,46px);max-width:22ch;margin-bottom:56px;letter-spacing:.01em}
+  .logos .lead{font-size:clamp(24px,3.4vw,46px);max-width:22ch;margin-bottom:56px;letter-spacing:-.01em}
   .logo-wall{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,2vw,26px)}
   .logo-wall .lg{position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
   .logo-wall .lgin{display:flex;align-items:center;justify-content:center;width:100%;height:100%;will-change:transform}
@@ -130,9 +159,9 @@
   .sec-head .idx{font-size:12px;letter-spacing:.16em;color:var(--paper-dim);text-transform:uppercase}
   .srow{display:grid;grid-template-columns:70px 1fr minmax(0,240px);align-items:center;gap:24px;padding:30px 0;border-top:1px solid var(--line);position:relative;cursor:default}
   .srow:last-child{border-bottom:1px solid var(--line)}
-  .srow .num{font-family:"Bebas Neue",sans-serif;font-size:20px;color:var(--orange);align-self:start;padding-top:.4em;letter-spacing:.04em;position:relative;z-index:2}
+  .srow .num{font-family:"Space Grotesk",sans-serif;font-size:20px;color:var(--orange);align-self:start;padding-top:.4em;letter-spacing:.04em;position:relative;z-index:2}
   .srow .scol{position:relative;z-index:2}
-  .srow .name{font-family:"Bebas Neue",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(32px,5.4vw,74px);letter-spacing:.01em;transition:transform .4s,color .3s;display:block;line-height:.95}
+  .srow .name{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(32px,5.4vw,74px);letter-spacing:-.01em;transition:transform .4s,color .3s;display:block;line-height:.95}
   .srow .desc{font-size:15px;color:var(--paper-dim);max-width:520px;line-height:1.55;max-height:0;opacity:0;overflow:hidden;transition:max-height .55s ease,opacity .4s ease,margin-top .5s ease}
   .srow:hover .desc{max-height:220px;opacity:1;margin-top:16px}
   .srow .wf{opacity:0;transform:translateX(18px);transition:opacity .45s ease,transform .45s ease;justify-self:end;width:100%;max-width:240px;color:rgba(244,241,234,.82);position:relative;z-index:2}
@@ -144,7 +173,7 @@
   .srow:hover .ill line,.srow:hover .ill rect,.srow:hover .ill circle,.srow:hover .ill path,.srow:hover .ill polyline,.srow:hover .ill polygon{stroke-dashoffset:0}
   .srow:hover .name{transform:translateX(22px);color:var(--orange)}
   /* ghost number */
-  .srow .ghost{position:absolute;right:14px;top:50%;transform:translate(44px,-50%);font-family:"Bebas Neue",sans-serif;font-size:clamp(150px,20vw,260px);line-height:.8;color:var(--paper);opacity:0;pointer-events:none;z-index:0;transition:opacity .55s ease,transform .55s ease}
+  .srow .ghost{position:absolute;right:14px;top:50%;transform:translate(44px,-50%);font-family:"Space Grotesk",sans-serif;font-size:clamp(150px,20vw,260px);line-height:.8;color:var(--paper);opacity:0;pointer-events:none;z-index:0;transition:opacity .55s ease,transform .55s ease}
   .srow:hover .ghost{opacity:.05;transform:translate(0,-50%)}
   @media(max-width:760px){.srow{grid-template-columns:44px 1fr}.srow .wf{display:none}.srow .ghost{display:none}}
 
@@ -153,7 +182,7 @@
   .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
   .stat-grid .st{padding:20px 26px;border-left:1px solid var(--line)}
   .stat-grid .st:first-child{border-left:none;padding-left:0}
-  .stat-grid .num{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:clamp(56px,9vw,130px);line-height:1;letter-spacing:.01em}
+  .stat-grid .num{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(45px,7.2vw,104px);line-height:1;letter-spacing:-.01em}
   .stat-grid .num .u{color:var(--orange)}
   .stat-grid .lbl{margin-top:14px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--paper-dim);line-height:1.4}
   @media(max-width:760px){.stat-grid{grid-template-columns:repeat(2,1fr);gap:30px 0}.stat-grid .st{border-left:none;padding-left:0}.stat-grid .st:nth-child(even){padding-left:26px;border-left:1px solid var(--line)}}
@@ -166,13 +195,13 @@
   .card::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 30%,rgba(5,7,15,.75))}
   .card:hover .bg{transform:scale(1.06)}
   .card .cat{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;transform:translateZ(45px)}
-  .card h3{font-size:clamp(30px,3.6vw,48px);letter-spacing:.01em;transform:translateZ(30px)}
+  .card h3{font-size:clamp(30px,3.6vw,48px);letter-spacing:-.01em;transform:translateZ(30px)}
   @media(max-width:760px){.work-grid{grid-template-columns:1fr}}
 
   /* PROCESS */
   .process{padding:clamp(70px,10vh,130px) 0;text-align:center;border-top:1px solid var(--line)}
-  .process .row{display:flex;justify-content:center;align-items:center;gap:clamp(14px,4vw,60px);flex-wrap:wrap}
-  .process .step{font-family:"Bebas Neue",sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(42px,9vw,128px);letter-spacing:.01em}
+  .process .row{display:flex;justify-content:center;align-items:center;gap:clamp(12px,3.2vw,48px);flex-wrap:nowrap}
+  .process .step{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(34px,7.2vw,102px);letter-spacing:-.01em;white-space:nowrap}
   .process .step.o{color:var(--orange)}
   .process .plus{color:var(--paper-dim);font-size:clamp(20px,3vw,40px);display:inline-block}
 
@@ -181,7 +210,7 @@
   .fly-stage{position:sticky;top:0;height:100vh;overflow:hidden}
   .fly-stage canvas{width:100%;height:100%;display:block}
   .fly-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(70% 60% at 50% 45%,rgba(255,90,22,.10),transparent 62%)}
-  .fly-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:1.05em;text-align:center;font-family:"Bebas Neue",sans-serif;text-transform:uppercase;font-size:clamp(46px,9vw,150px);letter-spacing:.015em;line-height:1;color:var(--paper);z-index:3;pointer-events:none;text-shadow:0 8px 46px rgba(5,7,15,.62)}
+  .fly-cap{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:1.05em;text-align:center;font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;font-size:clamp(35px,6.75vw,113px);letter-spacing:-.02em;line-height:1;color:var(--paper);z-index:3;pointer-events:none;text-shadow:0 8px 46px rgba(5,7,15,.62)}
   .fly-cap .cap{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
   .fly-cap .cap.on{opacity:1;transform:none}
   .fly-cap .o{color:var(--orange)}
@@ -196,7 +225,7 @@
   .cta h2 .o{color:var(--orange)}
   .cta .l1{color:var(--paper)}
   .cta .l2{color:var(--ink);opacity:0}
-  .cta .btn{display:inline-block;margin-top:44px;border:1px solid var(--paper);border-radius:100px;padding:16px 44px;font-family:"Bebas Neue",sans-serif;text-transform:uppercase;font-size:19px;letter-spacing:.08em;transition:background .3s,color .3s}
+  .cta .btn{display:inline-block;margin-top:44px;border:1px solid var(--paper);border-radius:100px;padding:16px 44px;font-family:"Space Grotesk",sans-serif;text-transform:uppercase;font-size:19px;letter-spacing:.08em;transition:background .3s,color .3s}
   .cta .btn:hover{background:var(--orange);border-color:var(--orange);color:#000}
 
   /* WIPE (CTA click) */
@@ -217,13 +246,13 @@
   /* password gate */
   #gate{position:fixed;inset:0;z-index:10001;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;text-align:center;cursor:auto}
   #gate *{cursor:auto}
-  #gate .gmark{font-family:"Bebas Neue",sans-serif;text-transform:uppercase;font-size:clamp(40px,8vw,86px);line-height:1;color:var(--paper);letter-spacing:.02em}
+  #gate .gmark{font-family:"Space Grotesk",sans-serif;text-transform:uppercase;font-size:clamp(40px,8vw,86px);line-height:1;color:var(--paper);letter-spacing:.02em}
   #gate .gmark span{color:var(--orange)}
   #gate .gate-hint{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-dim)}
   #gate .gate-row{display:flex;gap:10px}
-  #gate input{background:transparent;border:1px solid var(--line);color:var(--paper);font-family:"Bebas Neue",sans-serif;font-size:22px;letter-spacing:.14em;text-transform:uppercase;padding:12px 20px;border-radius:100px;outline:none;width:220px;text-align:center;cursor:text}
+  #gate input{background:transparent;border:1px solid var(--line);color:var(--paper);font-family:"Space Grotesk",sans-serif;font-size:22px;letter-spacing:.14em;text-transform:uppercase;padding:12px 20px;border-radius:100px;outline:none;width:220px;text-align:center;cursor:text}
   #gate input:focus{border-color:var(--orange)}
-  #gate button{background:var(--orange);color:#0A0F1E;border:none;font-family:"Bebas Neue",sans-serif;font-size:22px;letter-spacing:.08em;text-transform:uppercase;padding:12px 28px;border-radius:100px;cursor:pointer}
+  #gate button{background:var(--orange);color:#0A0F1E;border:none;font-family:"Space Grotesk",sans-serif;font-size:22px;letter-spacing:.08em;text-transform:uppercase;padding:12px 28px;border-radius:100px;cursor:pointer}
   #gate.err input{border-color:#ff3b30;animation:gshake .4s}
   @keyframes gshake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 </style>
@@ -345,8 +374,8 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://www.planatechnologies.com/ux-studio#webpage",
-      "url": "https://www.planatechnologies.com/ux-studio",
+      "@id": "https://planatechnologies.com/ux-studio#webpage",
+      "url": "https://planatechnologies.com/ux-studio",
       "name": "Plan A UX Studio — UX/UI Design That Ships",
       "isPartOf": {
         "@id": "https://www.planatechnologies.com/#website"
@@ -358,7 +387,7 @@
     },
     {
       "@type": "FAQPage",
-      "@id": "https://www.planatechnologies.com/ux-studio#faq",
+      "@id": "https://planatechnologies.com/ux-studio#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -420,7 +449,7 @@
 
 <noscript>
   <div class="nojs">
-    <h1>Plan A UX Studio — Design That Ships</h1>
+    <p class="nojs-title" style="font-weight:700;font-size:28px;text-transform:uppercase">Plan A UX Studio — Design That Ships</p>
     <p>The UX studio inside Plan A Technologies. We design digital products and our engineers ship them — from research and product UX through UI, design systems and motion. An experienced, highly selective team, available globally 24/7/365.</p>
     <p>Trusted with screens used by customers of Apple, Google, Microsoft, Amazon, Verizon, NBC, Mayo Clinic, MGM Resorts, Marriott and more.</p>
     <p>Services: Product &amp; UX, UI &amp; Visual, Design Systems, Research, Motion &amp; Art.</p>
@@ -448,25 +477,20 @@
   </svg>
 </div>
 
-<nav><div class="wrap nav-in">
-  <a href="#" aria-label="Plan A UX Studio">
-    <svg class="logo" viewBox="0 0 4699 2304" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plan A UX Studio">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3262.66 1563.23H4323.91V501.98H3262.66V1563.23ZM3970.49 1324.29L4030.64 1502.13H4209.73L3900.14 614.29H3686.47L3376.88 1502.13H3555.99L3616.11 1324.29H3970.49ZM3916.75 1166.94H3668.58L3792.68 802.33L3916.75 1166.94Z" fill="#FF5800"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M1104.74 885.37C1104.74 707.6 996.38 592.6 809.34 592.6H432.65V1499.63H602.94V1175.5H813.19C989.92 1175.5 1104.73 1053.96 1104.73 885.37H1104.74ZM808.05 753.35C886.74 753.35 934.47 793.86 934.47 885.37C934.47 976.88 886.74 1017.36 808.05 1017.36H602.94V753.35H808.05ZM1211.83 1499.63H1382.12V527.24H1211.83V1499.63ZM1992.27 1499.63H2148.36C2139.33 1473.48 2129.01 1422.51 2129.01 1389.85V1039.57C2129.01 986 2108.37 809.55 1838.76 809.55C1664.61 809.55 1543.34 904.97 1526.58 1033.02H1696.85C1712.34 975.53 1782 948.08 1842.62 948.08C1918.73 948.08 1963.89 976.84 1963.89 1012.11C1963.89 1067.01 1885.2 1080.07 1774.25 1090.53C1627.19 1103.62 1502.09 1142.83 1502.09 1294.42C1502.09 1446.01 1631.06 1512.68 1771.68 1512.68C1864.55 1512.68 1931.65 1483.92 1975.5 1436.87C1979.36 1461.71 1984.53 1482.62 1992.28 1499.62L1992.27 1499.63ZM1970.33 1238.23C1970.33 1324.5 1887.78 1359.79 1785.86 1359.79C1717.49 1359.79 1673.64 1333.64 1673.64 1295.74C1673.64 1246.08 1725.23 1227.78 1809.09 1218.62C1878.75 1210.8 1934.22 1199.02 1970.32 1175.5V1238.22L1970.33 1238.23ZM2883.64 1106.23C2883.64 928.48 2780.43 809.55 2624.37 809.55C2553.4 809.55 2495.35 840.91 2452.79 891.88V826.52H2290.24V1499.62H2460.53V1106.22C2460.53 1030.41 2513.41 972.9 2589.52 972.9C2701.76 972.9 2713.37 1067.01 2713.37 1106.22V1499.62H2883.64V1106.22V1106.23Z" fill="white"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3869.09 351.35H4474.54V956.8H4576.6V249.3H3869.09V351.35Z" fill="#FF5800"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3705.21 425.09V325.1H129.44V1740.1H4500.79V1114.11H4399.95V1640.07H230.28V425.09H3705.21Z" fill="white"/>
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M129.44 2068.59H1178.77V2018.05H129.44V2068.59ZM3501.46 2068.59H4500.79V2018.05H3501.46V2068.59Z" fill="white"/>
-      <path d="M3273.72 2042.64C3273.72 2067.71 3269.02 2089.19 3259.63 2107.07C3250.31 2124.87 3237.59 2138.51 3221.45 2147.98C3205.39 2157.45 3187.17 2162.18 3166.79 2162.18C3146.41 2162.18 3128.15 2157.45 3112.02 2147.98C3095.96 2138.43 3083.23 2124.76 3073.84 2106.95C3064.52 2089.08 3059.86 2067.64 3059.86 2042.64C3059.86 2017.56 3064.52 1996.12 3073.84 1978.32C3083.23 1960.44 3095.96 1946.77 3112.02 1937.3C3128.15 1927.83 3146.41 1923.09 3166.79 1923.09C3187.17 1923.09 3205.39 1927.83 3221.45 1937.3C3237.59 1946.77 3250.31 1960.44 3259.63 1978.32C3269.02 1996.12 3273.72 2017.56 3273.72 2042.64ZM3231.34 2042.64C3231.34 2024.98 3228.57 2010.1 3223.04 1997.98C3217.59 1985.78 3210.01 1976.58 3200.31 1970.36C3190.62 1964.08 3179.44 1960.93 3166.79 1960.93C3154.14 1960.93 3142.96 1964.08 3133.27 1970.36C3123.57 1976.58 3115.96 1985.78 3110.43 1997.98C3104.97 2010.1 3102.24 2024.98 3102.24 2042.64C3102.24 2060.29 3104.97 2075.21 3110.43 2087.41C3115.96 2099.53 3123.57 2108.73 3133.27 2115.02C3142.96 2121.23 3154.14 2124.34 3166.79 2124.34C3179.44 2124.34 3190.62 2121.23 3200.31 2115.02C3210.01 2108.73 3217.59 2099.53 3223.04 2087.41C3228.57 2075.21 3231.34 2060.29 3231.34 2042.64Z" fill="white"/>
-      <path d="M3004.11 1926.27V2159H2961.95V1926.27H3004.11Z" fill="white"/>
-      <path d="M2792.94 2159H2714.08V1926.27H2794.53C2817.64 1926.27 2837.49 1930.93 2854.08 1940.25C2870.75 1949.49 2883.55 1962.79 2892.49 1980.14C2901.43 1997.48 2905.9 2018.24 2905.9 2042.41C2905.9 2066.65 2901.39 2087.48 2892.38 2104.91C2883.44 2122.33 2870.52 2135.7 2853.62 2145.02C2836.81 2154.34 2816.58 2159 2792.94 2159ZM2756.24 2122.52H2790.9C2807.11 2122.52 2820.63 2119.57 2831.47 2113.66C2842.3 2107.67 2850.44 2098.77 2855.9 2086.95C2861.35 2075.06 2864.08 2060.21 2864.08 2042.41C2864.08 2024.61 2861.35 2009.83 2855.9 1998.09C2850.44 1986.27 2842.38 1977.45 2831.69 1971.61C2821.09 1965.7 2807.91 1962.75 2792.15 1962.75H2756.24V2122.52Z" fill="white"/>
-      <path d="M2610.1 1926.27H2652.26V2078.32C2652.26 2094.98 2648.32 2109.64 2640.44 2122.3C2632.63 2134.95 2621.65 2144.83 2607.48 2151.95C2593.32 2159 2576.76 2162.52 2557.82 2162.52C2538.81 2162.52 2522.22 2159 2508.05 2151.95C2493.88 2144.83 2482.9 2134.95 2475.1 2122.3C2467.29 2109.64 2463.39 2094.98 2463.39 2078.32V1926.27H2505.55V2074.8C2505.55 2084.49 2507.67 2093.13 2511.91 2100.7C2516.23 2108.28 2522.29 2114.23 2530.1 2118.55C2537.9 2122.79 2547.14 2124.91 2557.82 2124.91C2568.51 2124.91 2577.75 2122.79 2585.55 2118.55C2593.43 2114.23 2599.49 2108.28 2603.73 2100.7C2607.98 2093.13 2610.1 2084.49 2610.1 2074.8V1926.27Z" fill="white"/>
-      <path d="M2225.92 1961.61V1926.27H2411.6V1961.61H2339.67V2159H2297.85V1961.61H2225.92Z" fill="white"/>
-      <path d="M2138.81 1990.25C2137.75 1980.33 2133.28 1972.6 2125.4 1967.07C2117.59 1961.54 2107.44 1958.77 2094.94 1958.77C2086.16 1958.77 2078.62 1960.1 2072.33 1962.75C2066.04 1965.4 2061.23 1969 2057.9 1973.55C2054.56 1978.09 2052.86 1983.28 2052.78 1989.11C2052.78 1993.96 2053.88 1998.17 2056.08 2001.73C2058.35 2005.29 2061.42 2008.32 2065.28 2010.82C2069.15 2013.24 2073.43 2015.29 2078.12 2016.95C2082.82 2018.62 2087.56 2020.02 2092.33 2021.16L2114.15 2026.61C2122.94 2028.66 2131.38 2031.42 2139.49 2034.91C2147.67 2038.39 2154.98 2042.79 2161.42 2048.09C2167.94 2053.39 2173.09 2059.8 2176.87 2067.3C2180.66 2074.8 2182.56 2083.58 2182.56 2093.66C2182.56 2107.3 2179.07 2119.3 2172.1 2129.68C2165.13 2139.98 2155.06 2148.05 2141.87 2153.89C2128.77 2159.64 2112.9 2162.52 2094.26 2162.52C2076.16 2162.52 2060.44 2159.72 2047.1 2154.11C2033.84 2148.51 2023.47 2140.33 2015.97 2129.57C2008.54 2118.81 2004.53 2105.7 2003.92 2090.25H2045.4C2046 2098.36 2048.5 2105.1 2052.9 2110.48C2057.29 2115.86 2063.01 2119.87 2070.06 2122.52C2077.18 2125.17 2085.13 2126.5 2093.92 2126.5C2103.09 2126.5 2111.12 2125.14 2118.01 2122.41C2124.98 2119.61 2130.44 2115.74 2134.37 2110.82C2138.31 2105.82 2140.32 2099.98 2140.4 2093.32C2140.32 2087.26 2138.54 2082.26 2135.06 2078.32C2131.57 2074.3 2126.69 2070.97 2120.4 2068.32C2114.19 2065.59 2106.91 2063.17 2098.58 2061.05L2072.1 2054.23C2052.94 2049.3 2037.78 2041.84 2026.65 2031.84C2015.59 2021.77 2010.06 2008.39 2010.06 1991.73C2010.06 1978.02 2013.77 1966.01 2021.19 1955.7C2028.69 1945.4 2038.88 1937.41 2051.76 1931.73C2064.64 1925.97 2079.22 1923.09 2095.51 1923.09C2112.03 1923.09 2126.5 1925.97 2138.92 1931.73C2151.42 1937.41 2161.23 1945.33 2168.35 1955.48C2175.47 1965.55 2179.15 1977.14 2179.37 1990.25H2138.81Z" fill="white"/>
-      <path d="M1715.24 1926.27L1766.49 2011.5H1768.31L1819.79 1926.27H1867.86L1796.15 2042.64L1868.99 2159H1820.13L1768.31 2074.34H1766.49L1714.68 2159H1666.04L1739.56 2042.64L1666.95 1926.27H1715.24Z" fill="white"/>
-      <path d="M1576.03 1926.27H1618.19V2078.32C1618.19 2094.98 1614.25 2109.64 1606.38 2122.3C1598.57 2134.95 1587.59 2144.83 1573.42 2151.95C1559.25 2159 1542.7 2162.52 1523.76 2162.52C1504.75 2162.52 1488.16 2159 1473.99 2151.95C1459.82 2144.83 1448.84 2134.95 1441.03 2122.3C1433.23 2109.64 1429.33 2094.98 1429.33 2078.32V1926.27H1471.49V2074.8C1471.49 2084.49 1473.61 2093.13 1477.85 2100.7C1482.17 2108.28 1488.23 2114.23 1496.03 2118.55C1503.84 2122.79 1513.08 2124.91 1523.76 2124.91C1534.44 2124.91 1543.69 2122.79 1551.49 2118.55C1559.37 2114.23 1565.43 2108.28 1569.67 2100.7C1573.91 2093.13 1576.03 2084.49 1576.03 2074.8V1926.27Z" fill="white"/>
-    </svg>
+<nav class="site"><div class="wrap nav-in">
+  <a class="brand" href="index.html" aria-label="Plan A Technologies home">
+    <img src="https://planatechnologies.com/images/logo.png" alt="Plan A Technologies">
   </a>
-  <div class="nav-links"><a href="#work">Work</a><a href="#services">Studio</a><a href="#services">Services</a><a href="#cta">Contact</a></div>
+  <button class="nav-toggle" aria-label="Menu">☰</button>
+  <div class="nav-links">
+    <a href="services.html">Services</a>
+    <a href="industries.html">Industries</a>
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="careers.html">Careers</a>
+    <a href="news.html">News</a>
+    <a class="btn-talk" href="contact.html">Let's Talk</a>
+  </div>
 </div></nav>
 
 <main>
@@ -562,8 +586,8 @@
   </div>
 </section>
 
-<!-- WORK -->
-<section class="work" id="work">
+<!-- WORK (hidden until real case studies are ready — remove the `hidden` attribute to restore) -->
+<section class="work" id="work" hidden>
   <div class="wrap">
     <div class="sec-head"><h2>Selected work</h2><div class="idx">(2026 ©)</div></div>
     <div class="work-grid">
@@ -948,6 +972,45 @@ if(ctaBtn&&wipe){
   });
 }
 });
+
+/* ===== NAV — behaves like the Plan A main site (scroll state, mobile toggle, dropdowns) ===== */
+(function(){
+  var nav=document.querySelector("nav.site"),
+      toggle=document.querySelector(".nav-toggle"),
+      links=document.querySelector(".nav-links");
+  if(nav){var onS=function(){nav.classList.toggle("scrolled",window.scrollY>30);};onS();addEventListener("scroll",onS,{passive:true});}
+  if(toggle&&links){
+    toggle.addEventListener("click",function(){var o=links.classList.toggle("open");toggle.textContent=o?"✕":"☰";});
+    links.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){links.classList.remove("open");toggle.textContent="☰";});});
+  }
+  /* Creative Studio dropdown */
+  (function(){
+    if(!links||links.querySelector(".nav-dd"))return;
+    var dd=document.createElement("div");dd.className="nav-dd";
+    dd.innerHTML='<button class="nav-dd-toggle" type="button">Creative Studio <span class="cr">▾</span></button>'+
+      '<div class="nav-dd-menu"><a href="ux-studio.html">UX Studio</a><a href="game-studio/index.html">Game Studio</a></div>';
+    var work=links.querySelector('a[href*="work.html"]');
+    if(work)links.insertBefore(dd,work.nextSibling);else links.appendChild(dd);
+    dd.querySelector(".nav-dd-toggle").addEventListener("click",function(e){e.stopPropagation();dd.classList.toggle("open");});
+  })();
+  /* Industries dropdown */
+  (function(){
+    if(!links||links.querySelector(".nav-dd-ind"))return;
+    var ind=links.querySelector('a[href$="industries.html"]');if(!ind)return;
+    var dd=document.createElement("div");dd.className="nav-dd nav-dd-ind";
+    dd.innerHTML='<button class="nav-dd-toggle" type="button">Industries <span class="cr">▾</span></button>'+
+      '<div class="nav-dd-menu"><a href="industries.html">All Industries</a>'+
+      '<a href="industries/high-tech.html">High Tech</a>'+
+      '<a href="industries/gaming-entertainment-hospitality.html">Gaming, Entertainment &amp; Hospitality</a>'+
+      '<a href="industries/healthcare.html">Healthcare</a>'+
+      '<a href="industries/financial-services.html">Financial Services</a>'+
+      '<a href="industries/blue-collar-environments.html">Blue Collar Environments</a>'+
+      '<a href="industries/government-non-profit.html">Government &amp; Non-Profits</a></div>';
+    ind.parentNode.replaceChild(dd,ind);
+    dd.querySelector(".nav-dd-toggle").addEventListener("click",function(e){e.stopPropagation();dd.classList.toggle("open");});
+  })();
+  document.addEventListener("click",function(){document.querySelectorAll(".nav-dd.open").forEach(function(d){d.classList.remove("open");});});
+}());
 </script>
 </body>
 </html>

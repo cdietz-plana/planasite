@@ -1,0 +1,36 @@
+# Plan A Technologies
+
+> Award-winning software engineering, AI and design company. We design, build, modernize and run mission-critical software for startups and Fortune 500 companies. Global team, available 24/7/365, headquartered in Las Vegas, NV.
+
+Plan A Technologies has helped organizations make their technology incredible for nearly 20 years. We combine old-school software craftsmanship with modern AI execution: award-winning custom development, integrations, migrations, rescue projects, platform modernization, and around-the-clock support — now delivered faster with AI agents alongside expert humans. We hire roughly 0.4% of applicants and have shipped 500+ products for 200+ clients.
+
+## Services
+- [AI Strategy & CTO Advisory](https://planatechnologies.com/services.html): senior guidance on enterprise AI transformation, roadmaps and risk.
+- [Data & AI Foundations](https://planatechnologies.com/services.html): modern data infrastructure across AWS, Microsoft, Google, Databricks, OpenAI and Anthropic.
+- [AI Agents & Intelligent Automation](https://planatechnologies.com/services.html): secure copilots, agentic workflows and enterprise automation.
+- [Software Engineering & Modernization](https://planatechnologies.com/services.html): new builds, legacy overhauls, integrations and rescue projects.
+- [24/7 Managed Technical Support](https://planatechnologies.com/services.html): veteran engineering coverage for systems that can't fail.
+
+## Industries
+- [High Tech](https://planatechnologies.com/industries/high-tech)
+- [Gaming, Entertainment & Hospitality](https://planatechnologies.com/industries/gaming-entertainment-hospitality)
+- [Healthcare](https://planatechnologies.com/industries/healthcare)
+- [Financial Services](https://planatechnologies.com/industries/financial-services)
+- [Blue Collar Environments](https://planatechnologies.com/industries/blue-collar-environments)
+- [Government & Non-Profits](https://planatechnologies.com/industries/government-non-profit)
+
+## Selected work
+- The Palms — Gamified Offers: promotional game engine inside a casino resort's newsletter. +$32K/mo newsletter revenue, +14% open rate, +103% click-through to booking.
+- Legacy Platform Re-Architecture (Financial Services): rebuilt a failing post-Flash transaction platform live in production; restored uptime, met new regulatory requirements, stopped client churn.
+- Chronic Care Platform (Healthcare): secure, clinically-monitored patient community with real-time red-flag alerts to nurses and family.
+- Field Dispatch Modernization (Blue Collar): multi-tenant dispatch platform rebuilt on .NET/React/React Native; 20x return via resale to new verticals.
+- Tribal Citizen Portal (Government): one portal for voting, licensing, benefits and jobs; now being white-labeled for other tribal governments.
+
+## Leadership
+Aron Ezra (Chairman), Slav Kulik (CEO), Eva Skornicka (Chief Delivery Officer), John Boesen (Chief Digital Officer), plus VPs across Solutions, Project Management, Product, Talent and Creative, and regional directors worldwide. Full bios: [About](https://planatechnologies.com/about-us).
+
+## Contact
+- Email: Sales@PlanAtechnologies.com
+- Phone: (888) 481-4011
+- Address: 10845 Griffith Peak Drive, Suite 200, Las Vegas, NV 89135
+- LinkedIn: https://www.linkedin.com/company/plan-a-tech
