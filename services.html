@@ -12,52 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/plana.css?v=11">
+<link rel="stylesheet" href="assets/plana.css?v=13">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<style>
-  /* Expanding-panel accordion — Most requested services */
-  .svc-acc{display:flex;gap:10px;height:clamp(460px,64vh,640px)}
-  .svc-panel{position:relative;flex:1 1 0;min-width:56px;overflow:hidden;border-radius:18px;
-    border:1px solid var(--line);background:linear-gradient(160deg,var(--navy-3),var(--ink));
-    cursor:pointer;color:inherit;text-align:left;padding:0;font:inherit;
-    transition:flex-grow .62s cubic-bezier(.22,.7,.2,1),border-color .4s,background .55s}
-  .svc-panel[aria-expanded="true"]{flex-grow:6;border-color:rgba(255,90,22,.5)}
-  .svc-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;
-    filter:grayscale(1) brightness(.42);transform:scale(1.04);transition:filter .55s,transform .7s}
-  .svc-panel[aria-expanded="true"] .svc-bg{filter:grayscale(.15) brightness(.6);transform:scale(1.08)}
-  .svc-panel::after{content:"";position:absolute;inset:0;z-index:1;
-    background:linear-gradient(180deg,rgba(5,7,15,.15) 18%,rgba(5,7,15,.9))}
-  .svc-panel[aria-expanded="true"]::after{background:
-    radial-gradient(115% 90% at 88% 8%,rgba(255,90,22,.24),transparent 55%),
-    linear-gradient(180deg,rgba(5,7,15,.08) 10%,rgba(5,7,15,.92))}
-  .svc-idx{position:absolute;top:20px;left:0;right:0;text-align:center;font-family:"Space Grotesk";
-    font-weight:700;font-size:22px;color:var(--orange);letter-spacing:.05em;z-index:3;transition:font-size .5s}
-  .svc-panel[aria-expanded="true"] .svc-idx{left:clamp(26px,3vw,48px);right:auto;text-align:left;font-size:clamp(30px,3.2vw,48px)}
-  .svc-spine{position:absolute;left:50%;bottom:26px;transform:translateX(-50%) rotate(180deg);writing-mode:vertical-rl;
-    font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:.02em;
-    font-size:clamp(15px,1.25vw,20px);white-space:nowrap;color:var(--paper);opacity:.9;transition:opacity .3s;z-index:2}
-  .svc-panel[aria-expanded="true"] .svc-spine{opacity:0;pointer-events:none}
-  .svc-content{position:absolute;left:0;bottom:0;width:100%;max-width:660px;padding:clamp(26px,3vw,48px);z-index:2;
-    opacity:0;transform:translateY(16px);transition:opacity .5s .1s,transform .55s .1s;pointer-events:none}
-  .svc-panel[aria-expanded="true"] .svc-content{opacity:1;transform:none;pointer-events:auto}
-  .svc-tag{display:inline-block;font-family:"Space Grotesk";font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--orange);border:1px solid rgba(255,90,22,.4);padding:5px 13px;border-radius:100px;margin-bottom:16px}
-  .svc-content h3{font-family:"Space Grotesk";font-weight:700;text-transform:uppercase;letter-spacing:-.01em;
-    font-size:clamp(25px,3.3vw,50px);line-height:.98;margin-bottom:15px;max-width:15ch}
-  .svc-content p{color:var(--paper-dim);font-size:clamp(14px,1.25vw,16.5px);line-height:1.62;max-width:52ch;margin-bottom:20px}
-  .svc-content .go{display:inline-flex;align-items:center;gap:8px;font-family:"Space Grotesk";font-weight:700;
-    font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange)}
-  .svc-content .go span{transition:transform .3s}
-  .svc-panel[aria-expanded="true"]:hover .go span{transform:translateX(6px)}
-  @media(max-width:820px){
-    .svc-acc{flex-direction:column;height:auto;gap:12px}
-    .svc-acc .svc-panel{flex:none;min-width:0;min-height:auto}
-    .svc-acc .svc-spine{display:none}
-    .svc-acc .svc-idx{position:static;text-align:left;padding:22px 24px 0;font-size:26px}
-    .svc-acc .svc-content{position:static;opacity:1;transform:none;pointer-events:auto;padding-top:10px;max-width:none}
-  }
-</style>
   <meta property="og:url" content="https://planatechnologies.com/services.html">
   <meta property="og:image" content="https://planatechnologies.com/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -228,7 +185,7 @@
   <div class="wrap">
     <div class="kicker" style="justify-content:center;margin-bottom:20px">Let's get in touch</div>
     <h2>Let's<br>build something <span class="o">cool.</span></h2>
-    <a href="contact.html" class="btn">Let's Talk ✳</a>
+    <a href="contact.html" class="btn">Let's Talk <svg class="ic-ast" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8V92M8 50H92M25 25L75 75M75 25L25 75" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg></a>
   </div>
 </section>
 
@@ -262,26 +219,6 @@
   </div>
 </div></footer>
 
-<script src="assets/plana.js?v=11"></script>
-<script>
-/* Most requested services — expanding accordion */
-(function(){
-  var acc=document.getElementById("svcAcc"); if(!acc) return;
-  var panels=[].slice.call(acc.querySelectorAll(".svc-panel"));
-  var hover=matchMedia("(hover:hover) and (pointer:fine)").matches;
-  function activate(p){ panels.forEach(function(x){ x.setAttribute("aria-expanded", x===p?"true":"false"); }); }
-  panels.forEach(function(p){
-    if(hover) p.addEventListener("mouseenter",function(){ activate(p); });
-    p.addEventListener("click",function(e){
-      if(e.target.closest("a")) return; // let the "Talk to us" link work
-      activate(p);
-    });
-    p.addEventListener("keydown",function(e){
-      if(e.key==="Enter"||e.key===" "){ if(e.target===p){ e.preventDefault(); activate(p); } }
-    });
-    p.addEventListener("focusin",function(){ activate(p); }); // expand when tabbing into it
-  });
-}());
-</script>
+<script src="assets/plana.js?v=13"></script>
 </body>
 </html>

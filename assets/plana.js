@@ -64,6 +64,18 @@
     });
   })();
 
+  /* mobile CTA — a compact "Let's Talk" that stays in the bar next to the menu button */
+  (function(){
+    if(!nav) return;
+    var navin=nav.querySelector(".nav-in"); if(!navin || navin.querySelector(".nav-cta-m")) return;
+    var toggle=navin.querySelector(".nav-toggle");
+    var contact=links && links.querySelector('a[href*="contact.html"]');
+    var a=document.createElement("a"); a.className="nav-cta-m";
+    a.href=contact ? contact.getAttribute("href") : "contact.html";
+    a.textContent="Let's Talk";
+    if(toggle) navin.insertBefore(a,toggle); else navin.appendChild(a);
+  })();
+
   /* close any open nav dropdown when clicking elsewhere */
   document.addEventListener("click",function(){
     document.querySelectorAll(".nav-dd.open").forEach(function(d){ d.classList.remove("open"); });
@@ -385,6 +397,20 @@
       }});
   })();
 
+  /* ---------- EXPANDING-PANEL ACCORDION (.svc-acc) ---------- */
+  document.querySelectorAll(".svc-acc").forEach(function(acc){
+    var panels=[].slice.call(acc.querySelectorAll(".svc-panel"));
+    if(!panels.length) return;
+    var hover=window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+    function activate(p){ panels.forEach(function(x){ x.setAttribute("aria-expanded", x===p?"true":"false"); }); }
+    panels.forEach(function(p){
+      if(hover) p.addEventListener("mouseenter",function(){ activate(p); });
+      p.addEventListener("click",function(e){ if(e.target.closest("a")) return; activate(p); });
+      p.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ if(e.target===p){ e.preventDefault(); activate(p); } } });
+      p.addEventListener("focusin",function(){ activate(p); });
+    });
+  });
+
   /* ---------- EXPERTISE pills fall + settle into a perfect grid ---------- */
   document.querySelectorAll(".exp-drop").forEach(function(box){
     var pills=box.querySelectorAll(".pill");
@@ -441,7 +467,7 @@
     var sec=document.querySelector(".cta-invert"); if(!sec || !window.ScrollTrigger) return;
     var over=sec.querySelector(".cta-layer.over");
     var hint=document.getElementById("ctaHint");
-    if(reduce){ if(over) over.style.clipPath="inset(0 0 0 0)"; if(hint) hint.style.opacity=0; return; }
+    if(reduce || window.innerWidth<=900){ if(over) over.style.clipPath="inset(0 0 0 0)"; if(hint) hint.style.opacity=0; return; }
     if(hint) hint.style.transition="opacity .3s ease";
     ScrollTrigger.create({trigger:sec,start:"top top",end:"bottom bottom",scrub:true,
       onUpdate:function(s){ if(over) over.style.clipPath="inset("+((1-s.progress)*100).toFixed(2)+"% 0 0 0)";
@@ -450,7 +476,7 @@
 
   /* ---------- 3D DIGITAL GLOBE ---------- */
   (function(){
-    var canvas=document.getElementById("globe"); if(!canvas || !window.THREE || reduce) return;
+    var canvas=document.getElementById("globe"); if(!canvas || !window.THREE || reduce || window.innerWidth<=900) return;
     var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true});
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
     var scene=new THREE.Scene();
