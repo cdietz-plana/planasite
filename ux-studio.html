@@ -64,9 +64,12 @@
     transition:background .4s,backdrop-filter .4s,border-color .4s;
     background:rgba(10,15,30,.25);backdrop-filter:blur(12px);border-bottom:1px solid transparent}
   nav.site.scrolled{background:rgba(10,15,30,.25);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+  .nav-in{display:flex;justify-content:space-between;align-items:center;padding:18px clamp(20px,5vw,80px)}
   .brand{display:flex;align-items:center}
   .brand img{height:34px;width:auto;display:block}
+  /* cross-platform asterisk icon (this page doesn't load plana.css) */
+  .ic-ast{display:inline-block;width:.82em;height:.82em;vertical-align:-.08em;fill:none;flex:none}
+  .nav-cta-m{display:none}
   .nav-links{display:flex;gap:30px;align-items:center;font-family:"Space Grotesk",sans-serif;
     font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase}
   .nav-links a{position:relative;opacity:.82;transition:opacity .3s;padding:4px 0}
@@ -88,13 +91,25 @@
   .nav-dd-menu a:hover{opacity:1;background:rgba(255,90,22,.1);color:var(--orange)}
   .nav-dd-menu a::after{display:none}
   @media(max-width:900px){
-    .nav-links{position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:center;gap:26px;font-size:22px;transform:translateY(-100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:210}
+    /* drop backdrop-filter on mobile: it traps the fixed menu inside the bar */
+    nav.site,nav.site.scrolled{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(10,15,30,.72)}
+    .nav-in{padding:14px 22px}
+    .brand img{height:30px}
+    .nav-toggle{display:block;z-index:230;position:relative;padding:4px;font-size:24px}
+    .nav-cta-m{display:inline-flex;align-items:center;margin-left:auto;margin-right:12px;
+      border:1px solid var(--orange);color:var(--orange);font-family:"Space Grotesk",sans-serif;font-weight:700;
+      font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:8px 13px;white-space:nowrap}
+    .nav-cta-m:hover,.nav-cta-m:active{background:var(--orange);color:#000}
+    .nav-links{position:fixed;inset:0;background:var(--navy);flex-direction:column;justify-content:flex-start;
+      align-items:flex-start;gap:2px;font-size:20px;padding:82px 22px 44px;overflow-y:auto;
+      transform:translateY(-100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:220}
     .nav-links.open{transform:none}
-    .nav-toggle{display:block;z-index:220;position:relative}
-    .nav-dd{flex-direction:column;align-items:center;gap:8px}
-    .nav-dd-menu{position:static;opacity:1;visibility:visible;transform:none;background:none;border:0;backdrop-filter:none;padding:0;margin:0;display:none;text-align:center;min-width:0}
+    .nav-links a{padding:11px 0}
+    .nav-links a.btn-talk{display:none}
+    .nav-dd{flex-direction:column;align-items:flex-start;gap:2px}
+    .nav-dd-menu{position:static;opacity:1;visibility:visible;transform:none;background:none;border:0;backdrop-filter:none;padding:0 0 0 14px;margin:0;display:none;text-align:left;min-width:0}
     .nav-dd.open .nav-dd-menu{display:block}
-    .nav-dd-menu a{font-size:17px;opacity:.7;padding:8px}
+    .nav-dd-menu a{font-size:17px;opacity:.7;padding:8px 0}
   }
 
   /* HERO */
@@ -613,7 +628,7 @@
     <div class="fly-cap" id="flyCap">
       <span class="cap on">An <span class="o">experienced</span> team</span>
       <span class="cap">Global. <span class="o">24/7/365.</span></span>
-      <span class="cap">Backed by serious <span class="o">tech talent</span></span>
+      <span class="cap">Backed by serious <span class="o" style="white-space:nowrap">tech&nbsp;talent</span></span>
     </div>
   </div>
 </section>
@@ -983,6 +998,14 @@ if(ctaBtn&&wipe){
     toggle.addEventListener("click",function(){var o=links.classList.toggle("open");toggle.textContent=o?"✕":"☰";});
     links.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){links.classList.remove("open");toggle.textContent="☰";});});
   }
+  /* compact mobile CTA in the bar */
+  (function(){
+    var navin=nav&&nav.querySelector(".nav-in"); if(!navin||navin.querySelector(".nav-cta-m"))return;
+    var contact=links&&links.querySelector('a[href*="contact.html"]');
+    var a=document.createElement("a"); a.className="nav-cta-m";
+    a.href=contact?contact.getAttribute("href"):"contact.html"; a.textContent="Let's Talk";
+    if(toggle)navin.insertBefore(a,toggle);else navin.appendChild(a);
+  })();
   /* Creative Studio dropdown */
   (function(){
     if(!links||links.querySelector(".nav-dd"))return;

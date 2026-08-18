@@ -6,7 +6,7 @@
 <title>Plan A Game Studio — Edge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Unbounded:wght@700;900&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --void: #07070C;
@@ -24,9 +24,9 @@
   --glass-border-bright: rgba(201,210,224,0.28);
   --chrome-dim: rgba(201,210,224,0.45);
   --chrome-faint: rgba(228,234,242,0.95);  /* was 0.18 — too faint to read; bumped to near-white */
-  --font-display: 'Bebas Neue', 'Unbounded', sans-serif;
-  --font-body: 'Space Grotesk', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Space Grotesk', sans-serif;
   --nav-h: 72px;
   --ease-out-expo: cubic-bezier(0.16,1,0.3,1);
 }
@@ -2426,7 +2426,7 @@ footer {
     }
     // x-axis label
     ctx.fillStyle = 'rgba(201,210,224,0.3)';
-    ctx.font = '10px JetBrains Mono, monospace';
+    ctx.font = '10px "Space Grotesk", sans-serif';
     ctx.fillText('0x', 2, H - 1);
     ctx.fillText('max win', W - 52, H - 1);
   }
