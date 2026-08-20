@@ -31,8 +31,8 @@
     var prefix=(svc && /^\.\.\//.test(svc.getAttribute("href"))) ? "../" : "";
     var dd=document.createElement("div"); dd.className="nav-dd";
     dd.innerHTML='<button class="nav-dd-toggle" type="button">Creative Studio <span class="cr">▾</span></button>'+
-      '<div class="nav-dd-menu"><a href="'+prefix+'ux-studio.html">UX Studio</a>'+
-      '<a href="'+prefix+'game-studio/index.html">Game Studio</a></div>';
+      '<div class="nav-dd-menu"><a href="'+prefix+'ux-studio.html">UX Design</a>'+
+      '<a href="'+prefix+'game-studio/index.html">Game Design</a></div>';
     var work=links.querySelector('a[href*="work.html"]');
     if(work) links.insertBefore(dd, work.nextSibling); else links.appendChild(dd);
     dd.querySelector(".nav-dd-toggle").addEventListener("click",function(e){
